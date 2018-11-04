@@ -1,0 +1,6 @@
+#login {
+    position:absolute;
+    z-index:1;
+    border:none #7A7A7A 4px; 
+    text-align: center;
+}
