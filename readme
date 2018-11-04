@@ -1,0 +1,3 @@
+The initial one version.
+
+It uses tomcat http-socket to persist a long connection between server and clisent. Client uses semantic UI css style.
