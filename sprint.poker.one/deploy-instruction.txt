@@ -1,6 +1,6 @@
 1. Install tomcat.
 2. Create folder: ${TOMCAT_DIR}\webapps\SprintPoke.
 3. Copy all files under ${sprint.poker}\html to ${TOMCAT_DIR}\webapps\SprintPoke.
-4. Copy all files under ${sprint.poker}\bin to ${TOMCAT_DIR}\webapps\SprintPoke\WEB-INF\classes.
+4. Copy all files under ${sprint.poker}\target\classes to ${TOMCAT_DIR}\webapps\SprintPoke\WEB-INF\classes.
 5. Start up tomcat.
 6. Open browser to use it. ==> localhost:8080/SprintPoke/index.html
