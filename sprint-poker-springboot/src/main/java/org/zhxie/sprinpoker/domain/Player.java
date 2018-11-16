@@ -1,4 +1,4 @@
-package sprint;
+package org.zhxie.sprinpoker.domain;
 
 public class Player {
 	private String name;

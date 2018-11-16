@@ -1,4 +1,4 @@
-package sprint;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,6 +20,8 @@ import javax.websocket.server.ServerEndpoint;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.zhxie.sprinpoker.domain.Player;
+import org.zhxie.sprinpoker.domain.Room;
 
 @ServerEndpoint("/poker")
 public class PokerWebSocket {
@@ -100,7 +102,7 @@ public class PokerWebSocket {
 	}
 
 	private void setAsHost(Session session) throws IOException {
-		sendMessage(session, new ReturnMsg(Command.SET_AS_HOST, ""));
+		sendMessage(session, new ReturnMsg(sprint.Command.SET_AS_HOST, ""));
 	}
 
 	@OnError
@@ -112,7 +114,7 @@ public class PokerWebSocket {
 	@OnMessage
 	public void onMessage(String message, Session session) throws IOException {
 		synchronized(PokerWebSocket.class) {
-			Command command = GSON.fromJson(message, Command.class);
+			sprint.Command command = GSON.fromJson(message, Command.class);
 			Player player = command.getPlayer();
 			if (Command.LOGIN == command.getType()) {
 				if (command.getPlayer().getName() == null || command.getPlayer().getName().isEmpty()) {
