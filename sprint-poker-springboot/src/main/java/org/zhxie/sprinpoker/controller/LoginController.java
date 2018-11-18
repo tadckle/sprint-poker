@@ -3,6 +3,7 @@ package org.zhxie.sprinpoker.controller;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
+import org.zhxie.sprinpoker.domain.Player;
 
 /**
  * Created by zhxie on 11/16/2018.
@@ -13,7 +14,8 @@ public class LoginController {
 
     @MessageMapping("/login")
     @SendTo("/answer/login")
-    public boolean login() {
+    public boolean login(Player player) {
+        System.out.println(String.format("%s am login", player.getName()));
         return true;
     }
 

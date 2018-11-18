@@ -1,7 +1,7 @@
-package org.zhxie.sprinpoker.main;
+package org.zhxie.sprinpoker;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+import org.springframework.boot.SpringApplication;
 /**
  * Created by zhxie on 11/16/2018.
  */
@@ -9,6 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Application {
 
     public static void main(String[] args) {
-        SpringBootApplication.run(Application.class, args);
+        SpringApplication.run(Application.class, args);
     }
 }

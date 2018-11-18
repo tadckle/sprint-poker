@@ -26,7 +26,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         config.enableSimpleBroker("/answer");
 
         // designate the "/poker" prefix for messages bound for @MessageMapping
-        config.setApplicationDestinationPrefixes("/poker");
+        config.setApplicationDestinationPrefixes("/app");
     }
 
     /**
@@ -37,6 +37,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
      */
     @Override
     public void registerStompEndpoints(StompEndpointRegistry config) {
-        config.addEndpoint("/poker-websocket").withSockJS();
+        config.addEndpoint("/pocker-websocket").withSockJS();
     }
 }
