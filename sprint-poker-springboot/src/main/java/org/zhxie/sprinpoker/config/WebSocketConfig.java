@@ -23,9 +23,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void configureMessageBroker(MessageBrokerRegistry config) {
 
         // carry the message back to the client on destinations prefixed with "/poker"
-        config.enableSimpleBroker("/answer");
+        config.enableSimpleBroker("/pocker");
 
-        // designate the "/poker" prefix for messages bound for @MessageMapping
+        // designate the "/app" prefix for messages bound for @MessageMapping
         config.setApplicationDestinationPrefixes("/app");
     }
 
