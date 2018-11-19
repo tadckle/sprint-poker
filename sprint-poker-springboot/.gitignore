@@ -21,4 +21,5 @@
 /target
 
 #eclipse
+.settings
 .project

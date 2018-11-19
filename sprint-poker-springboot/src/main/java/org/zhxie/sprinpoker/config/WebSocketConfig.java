@@ -1,10 +1,12 @@
 package org.zhxie.sprinpoker.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.zhxie.sprinpoker.repository.SocketSessionRegistry;
 
 /**
  * Created by zhxie on 11/16/2018.
@@ -38,5 +40,15 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry config) {
         config.addEndpoint("/pocker-websocket").withSockJS();
+    }
+
+    @Bean
+    public SocketSessionRegistry SocketSessionRegistry(){
+        return new SocketSessionRegistry();
+    }
+
+    @Bean
+    public STOMPConnectEventListener STOMPConnectEventListener(){
+        return new STOMPConnectEventListener();
     }
 }
