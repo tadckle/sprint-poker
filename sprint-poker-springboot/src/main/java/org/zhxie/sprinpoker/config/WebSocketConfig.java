@@ -1,10 +1,12 @@
 package org.zhxie.sprinpoker.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.zhxie.sprinpoker.repository.SocketSessionRegistry;
 
 /**
  * Created by zhxie on 11/16/2018.
@@ -23,9 +25,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void configureMessageBroker(MessageBrokerRegistry config) {
 
         // carry the message back to the client on destinations prefixed with "/poker"
-        config.enableSimpleBroker("/answer");
+        config.enableSimpleBroker("/pocker");
 
-        // designate the "/poker" prefix for messages bound for @MessageMapping
+        // designate the "/app" prefix for messages bound for @MessageMapping
         config.setApplicationDestinationPrefixes("/app");
     }
 
@@ -38,5 +40,15 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry config) {
         config.addEndpoint("/pocker-websocket").withSockJS();
+    }
+
+    @Bean
+    public SocketSessionRegistry SocketSessionRegistry(){
+        return new SocketSessionRegistry();
+    }
+
+    @Bean
+    public STOMPConnectEventListener STOMPConnectEventListener(){
+        return new STOMPConnectEventListener();
     }
 }

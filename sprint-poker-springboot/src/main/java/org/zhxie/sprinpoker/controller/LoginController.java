@@ -13,9 +13,9 @@ import org.zhxie.sprinpoker.domain.Player;
 public class LoginController {
 
     @MessageMapping("/login")
-    @SendTo("/answer/login")
-    public boolean login(Player player) {
-        System.out.println(String.format("%s am login", player.getName()));
+    @SendTo("/pocker/login")
+    public Boolean login(Player player) {
+        System.out.println(String.format("%s is logining", player.getName()));
         return true;
     }
 
