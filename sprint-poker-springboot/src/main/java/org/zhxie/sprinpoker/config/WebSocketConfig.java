@@ -39,7 +39,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
      */
     @Override
     public void registerStompEndpoints(StompEndpointRegistry config) {
-        config.addEndpoint("/pocker-websocket").withSockJS();
+        config.addEndpoint("/pocker-websocket").setAllowedOrigins("*").withSockJS();
     }
 
     @Bean

@@ -27,6 +27,13 @@ export default {
     *throwError() {
       throw new Error('hi error');
     },
+  },
+  subscriptions: {
+    openSocket ({ dispatch }) {
+      return loginService.onLoginServer((data) => {
+        
+      })
+    },
   }
 
 }
