@@ -14,8 +14,8 @@ public class LoginController {
 
     @MessageMapping("/login")
     @SendTo("/pocker/login")
-    public Boolean login(String player) {
-        System.out.println(String.format("%s is logining", player));
+    public Boolean login(Player player) {
+        System.out.println(String.format("%s is logining", player.getName()));
         return true;
     }
 
