@@ -1,7 +1,10 @@
 package org.zhxie.sprinpoker.repository;
 
+import com.google.common.collect.Lists;
 import org.springframework.util.Assert;
+import org.zhxie.sprinpoker.domain.Room;
 
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -13,6 +16,8 @@ public class SocketSessionRegistry {
     //这个集合存储session
     private final ConcurrentMap<String, Set<String>> userSessionIds = new ConcurrentHashMap();
     private final Object lock = new Object();
+    private static final List<Room> rooms =Lists.newArrayList();
+
 
     public SocketSessionRegistry() {
     }
@@ -58,5 +63,7 @@ public class SocketSessionRegistry {
         }
     }
 
-
+    public List<Room> getRooms() {
+        return rooms;
+    }
 }

@@ -1,5 +1,7 @@
 package org.zhxie.sprinpoker.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
@@ -9,6 +11,8 @@ import org.zhxie.sprinpoker.repository.SocketSessionRegistry;
 import java.util.List;
 
 public class STOMPConnectEventListener implements ApplicationListener<SessionConnectEvent> {
+
+    private final Logger logger = LoggerFactory.getLogger(STOMPConnectEventListener.class);
 
     @Autowired
     SocketSessionRegistry webAgentSessionRegistry;
@@ -25,6 +29,7 @@ public class STOMPConnectEventListener implements ApplicationListener<SessionCon
             agentId = "";
         }
         String sessionId = sha.getSessionId();
+        logger.info("Session ID: {}", sessionId);
         webAgentSessionRegistry.registerSessionId(agentId,sessionId);
     }
 
