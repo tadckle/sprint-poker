@@ -10,6 +10,10 @@ public class Room {
 
 	private String desc;
 
+	public Room() {
+
+  }
+
 	public Room(String roomNum, String creator) {
 		super();
 		this.roomNum = roomNum;
