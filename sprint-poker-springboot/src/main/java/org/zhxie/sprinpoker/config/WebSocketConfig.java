@@ -17,38 +17,36 @@ import org.zhxie.sprinpoker.repository.SocketSessionRegistry;
 
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    /**
-     * Configure message broker options.
-     *
-     config     */
-    @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
+  /**
+   * Configure message broker options.
+   * <p>
+   * config
+   */
+  @Override
+  public void configureMessageBroker(MessageBrokerRegistry config) {
 
-        // carry the message back to the client on destinations prefixed with "/poker"
-        config.enableSimpleBroker("/pocker");
+    // carry the message back to the client on destinations prefixed with "/poker"
+    config.enableSimpleBroker("/pocker");
 
-        // designate the "/app" prefix for messages bound for @MessageMapping
-        config.setApplicationDestinationPrefixes("/app");
-    }
+    // designate the "/app" prefix for messages bound for @MessageMapping
+    config.setApplicationDestinationPrefixes("/app");
+  }
 
-    /**
-     * Register STOMP endpoints mapping each to a specific URL and (optionally)
-     * enabling and configuring SockJS fallback options.
-     *
-     * @param config
-     */
-    @Override
-    public void registerStompEndpoints(StompEndpointRegistry config) {
-        config.addEndpoint("/pocker-websocket").setAllowedOrigins("*").withSockJS();
-    }
+  /**
+   * Register STOMP endpoints mapping each to a specific URL and (optionally)
+   * enabling and configuring SockJS fallback options.
+   *
+   * @param config
+   */
+  @Override
+  public void registerStompEndpoints(StompEndpointRegistry config) {
+    config.addEndpoint("/pocker-websocket").addInterceptors(new HttpHandshakeInterceptor()).setAllowedOrigins("*")
+            .withSockJS();
+  }
 
-    @Bean
-    public SocketSessionRegistry SocketSessionRegistry(){
-        return new SocketSessionRegistry();
-    }
+  @Bean
+  public SocketSessionRegistry SocketSessionRegistry() {
+    return new SocketSessionRegistry();
+  }
 
-    @Bean
-    public STOMPConnectEventListener STOMPConnectEventListener(){
-        return new STOMPConnectEventListener();
-    }
 }
