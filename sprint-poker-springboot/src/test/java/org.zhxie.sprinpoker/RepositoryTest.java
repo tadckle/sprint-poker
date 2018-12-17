@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.zhxie.sprinpoker.domain.PokerInfo;
-import org.zhxie.sprinpoker.service.PokerInfoService;
+import org.zhxie.sprinpoker.domain.TicketStoryPointRecord;
+import org.zhxie.sprinpoker.service.TicketStoryPointRecordService;
 
 import java.time.LocalDate;
 
@@ -15,23 +15,24 @@ import java.time.LocalDate;
 @SpringBootTest
 public class RepositoryTest {
     @Autowired
-    private PokerInfoService pokerInfoService;
+    private TicketStoryPointRecordService ticketStoryPointRecordService;
 
 
 //    @Test
     public void testSave(){
-        PokerInfo pokerInfo = new PokerInfo();
-        pokerInfo.setDescription("DOM-123");
-        pokerInfo.setStoryPoint(3);
-        pokerInfo.setUsers("jianyang,jason,xianchen,da-long,yangliu");
-        pokerInfo.setDate(LocalDate.now());
-        pokerInfoService.save(pokerInfo);
+        TicketStoryPointRecord ticketStoryPointRecord = new TicketStoryPointRecord();
+        ticketStoryPointRecord.setTicketNum("DOM-123");
+        ticketStoryPointRecord.setDescription("DOM-123:description");
+        ticketStoryPointRecord.setStoryPoint(3.0);
+        ticketStoryPointRecord.setUsers("jianyang,jason,xianchen,da-long,yangliu");
+        ticketStoryPointRecord.setDate(LocalDate.now());
+        ticketStoryPointRecordService.save(ticketStoryPointRecord);
     }
 
 //    @Test
     public void testQueryByDate() {
         LocalDate date = LocalDate.now();
-        Page<PokerInfo> pokerInfos = pokerInfoService.queryByDate(date, 0, 50);
+        Page<TicketStoryPointRecord> pokerInfos = ticketStoryPointRecordService.queryByDate(date, 0, 50);
         Assert.assertEquals(6, pokerInfos.getTotalElements());
     }
 }

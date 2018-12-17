@@ -5,12 +5,13 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "poker_info")
-public class PokerInfo implements Serializable {
+@Table(name = "ticket_story_point_record")
+public class TicketStoryPointRecord implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer storyPoint;
+    private String ticketNum;
+    private Double storyPoint;
     private String users;
     private String description;
     private LocalDate date;
@@ -23,11 +24,19 @@ public class PokerInfo implements Serializable {
         this.id = id;
     }
 
-    public Integer getStoryPoint() {
+    public String getTicketNum() {
+        return ticketNum;
+    }
+
+    public void setTicketNum(String ticketNum) {
+        this.ticketNum = ticketNum;
+    }
+
+    public Double getStoryPoint() {
         return storyPoint;
     }
 
-    public void setStoryPoint(int storyPoint) {
+    public void setStoryPoint(Double storyPoint) {
         this.storyPoint = storyPoint;
     }
 
