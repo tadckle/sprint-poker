@@ -20,7 +20,7 @@ public class TicketStoryPointRecordService {
         TicketStoryPointRecord ticketStoryPointRecord = new TicketStoryPointRecord();
         ticketStoryPointRecord.setDate(date);
         Pageable pageable = PageRequest.of(pageNum -1, pageLimit);
-        ExampleMatcher matcher = ExampleMatcher.matching().withIgnorePaths("id","storyPoint","users", "description");
+        ExampleMatcher matcher = ExampleMatcher.matching().withIgnorePaths("id", "ticketNum","storyPoint","users", "description");
         Example<TicketStoryPointRecord> example = Example.of(ticketStoryPointRecord, matcher);
         return storyPointRecordDAO.findAll(example, pageable);
     }

@@ -10,8 +10,8 @@ import org.zhxie.sprinpoker.service.TicketStoryPointRecordService;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/poker/showTicketStoryPointInfo")
-public class ShowTicketStoryPointInfoController {
+@RequestMapping("/poker/ticketStoryPoint")
+public class TicketStoryPointController {
 
     @Autowired
     private TicketStoryPointRecordService ticketStoryPointRecordService;

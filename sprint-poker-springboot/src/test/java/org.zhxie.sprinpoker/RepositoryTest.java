@@ -1,6 +1,7 @@
 package org.zhxie.sprinpoker;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +19,7 @@ public class RepositoryTest {
     private TicketStoryPointRecordService ticketStoryPointRecordService;
 
 
-//    @Test
+    @Test
     public void testSave(){
         TicketStoryPointRecord ticketStoryPointRecord = new TicketStoryPointRecord();
         ticketStoryPointRecord.setTicketNum("DOM-123");
@@ -29,10 +30,10 @@ public class RepositoryTest {
         ticketStoryPointRecordService.save(ticketStoryPointRecord);
     }
 
-//    @Test
+    @Test
     public void testQueryByDate() {
         LocalDate date = LocalDate.now();
-        Page<TicketStoryPointRecord> pokerInfos = ticketStoryPointRecordService.queryByDate(date, 0, 50);
-        Assert.assertEquals(6, pokerInfos.getTotalElements());
+        Page<TicketStoryPointRecord> pokerInfos = ticketStoryPointRecordService.queryByDate(date, 1, 50);
+        Assert.assertEquals(1, pokerInfos.getTotalElements());
     }
 }
