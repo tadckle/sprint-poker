@@ -24,8 +24,6 @@ public class LoginController {
       return new State(false, userId);
     }
     final String sessionId = headerAccessor.getSessionAttributes().get("sessionId").toString();
-    System.out.println(sessionId);
-    System.out.println(String.format("%s is logining", userId));
     sessionRepo.registerSessionId(userId, sessionId);
     return new State(true, userId);
   }
