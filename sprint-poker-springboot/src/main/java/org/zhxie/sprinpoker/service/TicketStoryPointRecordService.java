@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.zhxie.sprinpoker.domain.TicketStoryPointRecord;
 import org.zhxie.sprinpoker.repository.dao.ITicketStoryPointRecordDAO;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 public class TicketStoryPointRecordService {
@@ -12,8 +13,16 @@ public class TicketStoryPointRecordService {
     private ITicketStoryPointRecordDAO storyPointRecordDAO;
 
 
-    public void save(TicketStoryPointRecord ticketStoryPointRecord) {
-        storyPointRecordDAO.save(ticketStoryPointRecord);
+    public Optional<TicketStoryPointRecord> findById(int id) {
+        return storyPointRecordDAO.findById(id);
+    }
+
+    public void deleteById(int id) {
+        storyPointRecordDAO.deleteById(id);
+    }
+
+    public TicketStoryPointRecord save(TicketStoryPointRecord ticketStoryPointRecord) {
+        return storyPointRecordDAO.save(ticketStoryPointRecord);
     }
 
     public Page<TicketStoryPointRecord> queryByDate(LocalDate date, int pageNum, int pageLimit){
