@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.zhxie.sprinpoker.domain.TicketRecord;
-import org.zhxie.sprinpoker.service.TicketStoryService;
+import org.zhxie.sprinpoker.service.TicketRecordService;
 
 import java.time.LocalDate;
 
@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @SpringBootTest
 public class RepositoryTest {
     @Autowired
-    private TicketStoryService ticketStoryService;
+    private TicketRecordService ticketRecordService;
 
 
     @Test
@@ -27,13 +27,13 @@ public class RepositoryTest {
         ticketRecord.setStoryPoint(3.0);
         ticketRecord.setUsers("jianyang,jason,xianchen,da-long,yangliu");
         ticketRecord.setDate(LocalDate.now());
-        ticketStoryService.save(ticketRecord);
+        ticketRecordService.save(ticketRecord);
     }
 
     @Test
     public void testQueryByDate() {
         LocalDate date = LocalDate.now();
-        Page<TicketRecord> pokerInfos = ticketStoryService.queryByDate(date, 1, 50);
+        Page<TicketRecord> pokerInfos = ticketRecordService.queryByDate(date, 1, 50);
         Assert.assertEquals(1, pokerInfos.getTotalElements());
     }
 }
