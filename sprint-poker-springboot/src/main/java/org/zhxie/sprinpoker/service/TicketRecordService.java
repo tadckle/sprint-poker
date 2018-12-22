@@ -12,7 +12,6 @@ public class TicketRecordService {
     @Autowired
     private ITicketStoryPointRecordDAO storyPointRecordDAO;
 
-
     public Optional<TicketRecord> findById(int id) {
         return storyPointRecordDAO.findById(id);
     }
@@ -29,7 +28,7 @@ public class TicketRecordService {
         TicketRecord ticketRecord = new TicketRecord();
         ticketRecord.setDate(date);
         Pageable pageable = PageRequest.of(pageNum -1, pageLimit);
-        ExampleMatcher matcher = ExampleMatcher.matching().withIgnorePaths("id", "ticketNum","storyPoint","users", "description");
+        ExampleMatcher matcher = ExampleMatcher.matching().withIgnorePaths("id","storyPoint","users", "description");
         Example<TicketRecord> example = Example.of(ticketRecord, matcher);
         return storyPointRecordDAO.findAll(example, pageable);
     }

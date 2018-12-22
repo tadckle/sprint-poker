@@ -31,5 +31,7 @@
   "engines": {
     "node": ">=8.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "path-to-regexp": "^2.4.0"
+  }
 }

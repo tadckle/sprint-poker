@@ -22,4 +22,5 @@
 
 #eclipse
 .settings
+.idea
 .project
