@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/poker/ticketStoryPoint")
+@RequestMapping("/poker/ticketRecord")
 public class TicketRecordController {
 
     @Autowired

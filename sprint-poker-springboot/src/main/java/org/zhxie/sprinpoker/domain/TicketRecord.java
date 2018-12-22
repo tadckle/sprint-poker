@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "ticket_story_point_record")
+@Table(name = "ticket_record")
 public class TicketRecord implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

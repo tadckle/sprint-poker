@@ -27,7 +27,7 @@ public class TicketRecordControllerTest {
     }
     @Test
     public void testQueryByDate() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/poker/ticketStoryPoint")
+        mvc.perform(MockMvcRequestBuilders.get("/poker/ticketRecord")
                 .param("date", "2018-12-16")
                 .param("pageNum", "1")
                 .accept(MediaType.APPLICATION_JSON))
