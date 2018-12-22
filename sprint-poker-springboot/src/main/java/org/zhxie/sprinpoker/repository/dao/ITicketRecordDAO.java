@@ -6,6 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.zhxie.sprinpoker.domain.TicketRecord;
 
-public interface ITicketStoryPointRecordDAO extends JpaRepository<TicketRecord, Integer> , JpaSpecificationExecutor<TicketRecord> {
-    Page<TicketRecord> findByTicketNumIgnoreCaseLikeAndDateEquals(Pageable pageable);
+public interface ITicketRecordDAO extends JpaRepository<TicketRecord, Integer> , JpaSpecificationExecutor<TicketRecord> {
 }

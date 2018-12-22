@@ -3,14 +3,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.zhxie.sprinpoker.domain.TicketRecord;
-import org.zhxie.sprinpoker.repository.dao.ITicketStoryPointRecordDAO;
+import org.zhxie.sprinpoker.repository.dao.ITicketRecordDAO;
 import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
 public class TicketRecordService {
     @Autowired
-    private ITicketStoryPointRecordDAO storyPointRecordDAO;
+    private ITicketRecordDAO storyPointRecordDAO;
 
     public Optional<TicketRecord> findById(int id) {
         return storyPointRecordDAO.findById(id);
