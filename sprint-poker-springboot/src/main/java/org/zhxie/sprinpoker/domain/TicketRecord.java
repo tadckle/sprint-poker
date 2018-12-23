@@ -16,6 +16,13 @@ public class TicketRecord implements Serializable {
     private String description;
     private LocalDate date;
 
+    public TicketRecord() {
+    }
+
+    public TicketRecord(int id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -5,7 +5,11 @@ import org.springframework.stereotype.Service;
 import org.zhxie.sprinpoker.domain.TicketRecord;
 import org.zhxie.sprinpoker.repository.dao.ITicketRecordDAO;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class TicketRecordService {
@@ -18,6 +22,11 @@ public class TicketRecordService {
 
     public void deleteById(int id) {
         ticketRecordDAO.deleteById(id);
+    }
+
+    public void deleteByIds(List<Integer> ids) {
+        List<TicketRecord> ticketRecords = ids.stream().map(id -> new TicketRecord(id)).collect(Collectors.toList());
+        ticketRecordDAO.deleteInBatch(ticketRecords);
     }
 
     public TicketRecord save(TicketRecord ticketRecord) {

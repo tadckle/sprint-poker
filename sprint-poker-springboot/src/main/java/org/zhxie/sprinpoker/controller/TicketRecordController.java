@@ -8,6 +8,7 @@ import org.zhxie.sprinpoker.domain.TicketRecord;
 import org.zhxie.sprinpoker.service.TicketRecordService;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -56,6 +57,12 @@ public class TicketRecordController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Boolean deleteById(@PathVariable int id) {
         ticketRecordService.deleteById(id);
+        return true;
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE)
+    public Boolean deleteByIds(@RequestBody List<Integer> ids) {
+        ticketRecordService.deleteByIds(ids);
         return true;
     }
 
