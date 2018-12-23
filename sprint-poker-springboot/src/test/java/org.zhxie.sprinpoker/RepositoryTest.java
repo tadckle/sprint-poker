@@ -34,6 +34,19 @@ public class RepositoryTest {
     public void testQueryByDate() {
         LocalDate date = LocalDate.now();
         Page<TicketRecord> pokerInfos = ticketRecordService.queryByDate(date, 1, 50);
-        Assert.assertEquals(1, pokerInfos.getTotalElements());
+        Assert.assertEquals(2, pokerInfos.getTotalElements());
     }
+
+    @Test
+    public void testQueryByTicketNum() {
+        Page<TicketRecord> pokerInfos = ticketRecordService.queryByTicketNum("doM-123", 1, 50);
+        Assert.assertEquals(3, pokerInfos.getTotalElements());
+    }
+
+    @Test
+    public void testQueryByTicketNumAndDate() {
+        Page<TicketRecord> pokerInfos = ticketRecordService.queryByTicketNumAndDate("doM-123", LocalDate.now(),1,50);
+        Assert.assertEquals(2, pokerInfos.getTotalElements());
+    }
+
 }

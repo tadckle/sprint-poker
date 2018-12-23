@@ -17,19 +17,26 @@ public class TicketRecordController {
     @Autowired
     private TicketRecordService ticketRecordService;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public Page<TicketRecord> queryByDate(@RequestParam(defaultValue = "") String date, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "50") int pageLimit) {
-        if (Strings.isNullOrEmpty(date)) {
-            return ticketRecordService.queryAll(pageNum, pageLimit);
-        } else {
+    @RequestMapping(method = RequestMethod.GET)
+    public Page<TicketRecord> queryByDate(@RequestParam(defaultValue = "") String ticketNum, @RequestParam(defaultValue = "") String date, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "50") int pageLimit) {
+        if (!Strings.isNullOrEmpty(ticketNum) && !Strings.isNullOrEmpty(date)) {
             LocalDate localDate = LocalDate.parse(date);
-            return ticketRecordService.queryByDate(localDate, pageNum, pageLimit);
+            return ticketRecordService.queryByTicketNumAndDate(ticketNum, localDate,pageNum,pageLimit);
         }
+        if (!Strings.isNullOrEmpty(ticketNum) && Strings.isNullOrEmpty(date)) {
+            return ticketRecordService.queryByTicketNum(ticketNum,pageNum,pageLimit);
+        }
+        if (Strings.isNullOrEmpty(ticketNum) && !Strings.isNullOrEmpty(date)) {
+            LocalDate localDate = LocalDate.parse(date);
+            return ticketRecordService.queryByDate(localDate,pageNum,pageLimit);
+        }
+        return ticketRecordService.queryAll(pageNum, pageLimit);
     }
 
     @RequestMapping( method = RequestMethod.POST)
     public Boolean save(@RequestBody TicketRecord ticketRecord) {
         ticketRecord.setId(null);
+        ticketRecord.setDate(LocalDate.now());
         TicketRecord result = ticketRecordService.save(ticketRecord);
         return result != null;
     }
@@ -41,6 +48,7 @@ public class TicketRecordController {
             return false;
         }
         ticketRecord.setId(id);
+        ticketRecord.setDate(optional.get().getDate());
         TicketRecord result = ticketRecordService.save(ticketRecord);
         return result != null;
     }

@@ -10,32 +10,38 @@ import java.util.Optional;
 @Service
 public class TicketRecordService {
     @Autowired
-    private ITicketRecordDAO storyPointRecordDAO;
+    private ITicketRecordDAO ticketRecordDAO;
 
     public Optional<TicketRecord> findById(int id) {
-        return storyPointRecordDAO.findById(id);
+        return ticketRecordDAO.findById(id);
     }
 
     public void deleteById(int id) {
-        storyPointRecordDAO.deleteById(id);
+        ticketRecordDAO.deleteById(id);
     }
 
     public TicketRecord save(TicketRecord ticketRecord) {
-        return storyPointRecordDAO.save(ticketRecord);
+        return ticketRecordDAO.save(ticketRecord);
     }
 
     public Page<TicketRecord> queryByDate(LocalDate date, int pageNum, int pageLimit){
-        TicketRecord ticketRecord = new TicketRecord();
-        ticketRecord.setDate(date);
         Pageable pageable = PageRequest.of(pageNum -1, pageLimit);
-        ExampleMatcher matcher = ExampleMatcher.matching().withIgnorePaths("id","storyPoint","users", "description");
-        Example<TicketRecord> example = Example.of(ticketRecord, matcher);
-        return storyPointRecordDAO.findAll(example, pageable);
+        return ticketRecordDAO.findByDate(date, pageable);
+    }
+
+    public Page<TicketRecord> queryByTicketNum(String ticketNum, int pageNum, int pageLimit){
+        Pageable pageable = PageRequest.of(pageNum -1, pageLimit);
+        return ticketRecordDAO.findByTicketNumIgnoreCase(ticketNum, pageable);
+    }
+
+    public Page<TicketRecord> queryByTicketNumAndDate(String ticketNum, LocalDate date, int pageNum, int pageLimit){
+        Pageable pageable = PageRequest.of(pageNum -1, pageLimit);
+        return ticketRecordDAO.findByTicketNumIgnoreCaseAndDate(ticketNum, date, pageable);
     }
 
     public Page<TicketRecord> queryAll(int pageNum, int pageLimit){
         Pageable pageable = PageRequest.of(pageNum -1, pageLimit);
-        return storyPointRecordDAO.findAll(pageable);
+        return ticketRecordDAO.findAll(pageable);
     }
 
 
