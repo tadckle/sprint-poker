@@ -20,10 +20,10 @@ public class Room {
 		this.creator = creator;
 	}
 
-  public Room(String s, String zhxie, String hello_room, String the_first_room) {
-    this(s,zhxie);
-	  this.name = hello_room;
-	  this.desc = the_first_room;
+  public Room(String roomNum, String creator, String name, String desc) {
+    this(roomNum, creator);
+	  this.name = name;
+	  this.desc = desc;
   }
 
   public String getRoomNum() {
