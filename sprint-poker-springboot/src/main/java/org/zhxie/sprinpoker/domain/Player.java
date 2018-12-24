@@ -1,11 +1,12 @@
 package org.zhxie.sprinpoker.domain;
 
 public class Player {
+
 	private String name;
 
 	private boolean isHost;
 
-	private int fibonacciNum = -1;
+	private String fibonacciNum = "??";
 
 	public String getName() {
 		return name;
@@ -23,12 +24,19 @@ public class Player {
 		this.isHost = isHost;
 	}
 
-	public int getFibonacciNum() {
+	public String getFibonacciNum() {
 		return fibonacciNum;
 	}
 
-	public void setFibonacciNum(int fibonacciNum) {
+	public void setFibonacciNum(String fibonacciNum) {
 		this.fibonacciNum = fibonacciNum;
 	}
 
+	public  Player(String name) {
+	  this.name = name;
+  }
+
+  public Player() {
+
+  }
 }

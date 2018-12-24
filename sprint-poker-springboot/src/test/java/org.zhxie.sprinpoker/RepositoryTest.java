@@ -1,13 +1,14 @@
 package org.zhxie.sprinpoker;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.zhxie.sprinpoker.domain.TicketStoryPointRecord;
-import org.zhxie.sprinpoker.service.TicketStoryPointRecordService;
+import org.zhxie.sprinpoker.domain.TicketRecord;
+import org.zhxie.sprinpoker.service.TicketRecordService;
 
 import java.time.LocalDate;
 
@@ -15,24 +16,37 @@ import java.time.LocalDate;
 @SpringBootTest
 public class RepositoryTest {
     @Autowired
-    private TicketStoryPointRecordService ticketStoryPointRecordService;
+    private TicketRecordService ticketRecordService;
 
 
-//    @Test
+    @Test
     public void testSave(){
-        TicketStoryPointRecord ticketStoryPointRecord = new TicketStoryPointRecord();
-        ticketStoryPointRecord.setTicketNum("DOM-123");
-        ticketStoryPointRecord.setDescription("DOM-123:description");
-        ticketStoryPointRecord.setStoryPoint(3.0);
-        ticketStoryPointRecord.setUsers("jianyang,jason,xianchen,da-long,yangliu");
-        ticketStoryPointRecord.setDate(LocalDate.now());
-        ticketStoryPointRecordService.save(ticketStoryPointRecord);
+        TicketRecord ticketRecord = new TicketRecord();
+        ticketRecord.setTicketNum("DOM-123");
+        ticketRecord.setDescription("DOM-123:description");
+        ticketRecord.setStoryPoint(3.0);
+        ticketRecord.setUsers("jianyang,jason,xianchen,da-long,yangliu");
+        ticketRecord.setDate(LocalDate.now());
+        ticketRecordService.save(ticketRecord);
     }
 
-//    @Test
+    @Test
     public void testQueryByDate() {
         LocalDate date = LocalDate.now();
-        Page<TicketStoryPointRecord> pokerInfos = ticketStoryPointRecordService.queryByDate(date, 0, 50);
-        Assert.assertEquals(6, pokerInfos.getTotalElements());
+        Page<TicketRecord> pokerInfos = ticketRecordService.queryByDate(date, 1, 50);
+        Assert.assertEquals(2, pokerInfos.getTotalElements());
     }
+
+    @Test
+    public void testQueryByTicketNum() {
+        Page<TicketRecord> pokerInfos = ticketRecordService.queryByTicketNum("doM-123", 1, 50);
+        Assert.assertEquals(3, pokerInfos.getTotalElements());
+    }
+
+    @Test
+    public void testQueryByTicketNumAndDate() {
+        Page<TicketRecord> pokerInfos = ticketRecordService.queryByTicketNumAndDate("doM-123", LocalDate.now(),1,50);
+        Assert.assertEquals(2, pokerInfos.getTotalElements());
+    }
+
 }

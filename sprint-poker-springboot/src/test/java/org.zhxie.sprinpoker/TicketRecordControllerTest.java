@@ -15,7 +15,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ShowTicketStoryPointRecordControllerTest {
+public class TicketRecordControllerTest {
 
     @Autowired
     private WebApplicationContext context;
@@ -25,9 +25,9 @@ public class ShowTicketStoryPointRecordControllerTest {
     public void setUp() throws Exception {
         mvc = MockMvcBuilders.webAppContextSetup(context).build();//建议使用这种
     }
-//    @Test
+    @Test
     public void testQueryByDate() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/poker/showTicketStoryPointInfo")
+        mvc.perform(MockMvcRequestBuilders.get("/poker/ticketRecord")
                 .param("date", "2018-12-16")
                 .param("pageNum", "1")
                 .accept(MediaType.APPLICATION_JSON))
