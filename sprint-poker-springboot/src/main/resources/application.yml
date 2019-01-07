@@ -1,11 +1,18 @@
+server:
+  port: 8080
 spring:
   application:
     name: sprint-poker #指定服务名
+  profiles:
+    active: dev
+---
+spring:
+  profiles: dev
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/sprint_poker?characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/sprint_poker?characterEncoding=utf-8&verifyServerCertificate=false&useSSL=true
     username: root
-    password: root
+    password: 1234
   jpa:
     database: MySQL
     show-sql: true
