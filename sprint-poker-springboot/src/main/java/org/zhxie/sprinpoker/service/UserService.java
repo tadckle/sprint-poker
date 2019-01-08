@@ -28,4 +28,13 @@ public class UserService {
         return userDAO.findByUserName(userName);
     }
 
+    public User findByUserNameAndPassword(String userName, String password) {
+        User user = userDAO.findByUserName(userName);
+        if (user != null && encoder.matches(password, user.getPassword())) {
+            return user;
+        } else {
+            return null;
+        }
+    }
+
 }
