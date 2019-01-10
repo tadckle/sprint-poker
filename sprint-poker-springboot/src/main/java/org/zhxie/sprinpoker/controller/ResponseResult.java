@@ -8,27 +8,30 @@ import java.util.Map;
  * Created by jianyang on 2019/1/9.
  */
 public class ResponseResult {
-    private boolean isSuccess;
+    public static final int SUCCESS = 2000;
+    public static final int LOGIN_ERROR = 4000;
+    public static final int REGIST_ERROR = 4001;
+    private int statusCode;
     private String message;
     private Map<String, Object> data = Maps.newHashMap();
 
-    public ResponseResult(boolean isSuccess, String message) {
-        this.isSuccess = isSuccess;
+    public ResponseResult(int statusCode, String message) {
+        this.statusCode = statusCode;
         this.message = message;
     }
 
-    public ResponseResult(boolean isSuccess, String message, Map<String, Object> data) {
-        this.isSuccess = isSuccess;
+    public ResponseResult(int statusCode, String message, Map<String, Object> data) {
+        this.statusCode = statusCode;
         this.message = message;
         this.data = data;
     }
 
-    public boolean isSuccess() {
-        return isSuccess;
+    public int getStatusCode() {
+        return statusCode;
     }
 
-    public void setSuccess(boolean success) {
-        isSuccess = success;
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
     }
 
     public String getMessage() {

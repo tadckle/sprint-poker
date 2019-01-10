@@ -29,15 +29,10 @@ public class UserLoginController {
     public ResponseResult regist(@RequestBody User user) {
         User findUser = userService.findByUserName(user.getUserName());
         if (findUser != null) {
-            return new ResponseResult(false, "用户名已经被注册");
+            return new ResponseResult(ResponseResult.REGIST_ERROR, "用户名已经被注册");
         }
-        User savedUser = userService.save(user);
-        //生成token
-        String token = jwtUtil.createJWT(savedUser.getId().toString(),
-                savedUser.getUserName(), "user");
-        Map<String, Object> data = Maps.newHashMap();
-        data.put("token",token);
-        return new ResponseResult(true, "注册成功", data);
+        userService.save(user);
+        return new ResponseResult(ResponseResult.SUCCESS, "注册成功");
 
     }
 
@@ -45,14 +40,14 @@ public class UserLoginController {
     public ResponseResult login(@RequestBody User user) {
         User findUser = userService.findByUserNameAndPassword(user.getUserName(), user.getPassword());
         if (findUser == null) {
-            return new ResponseResult(false, "用户名或密码错误");
+            return new ResponseResult(ResponseResult.LOGIN_ERROR, "用户名或密码错误");
         } else {
             //生成token
             String token = jwtUtil.createJWT(findUser.getId().toString(),
                     findUser.getUserName(), "user");
             Map<String, Object> data = Maps.newHashMap();
             data.put("token",token);
-            return new ResponseResult(true, "登录成功", data);
+            return new ResponseResult(ResponseResult.SUCCESS, "登录成功", data);
         }
     }
 
