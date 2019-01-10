@@ -5,6 +5,7 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
@@ -13,16 +14,17 @@ import java.util.Date;
  */
 
 @ConfigurationProperties("jwt.config")
+@Component
 public class JwtUtil {
-    private String key; //密钥
-    private long ttl;   //过期时间
+    private static String  key; //密钥
+    private static long ttl;   //过期时间
 
     public String getKey() {
         return key;
     }
 
     public void setKey(String key) {
-        this.key = key;
+        JwtUtil.key = key;
     }
 
     public long getTtl() {
@@ -30,7 +32,7 @@ public class JwtUtil {
     }
 
     public void setTtl(long ttl) {
-        this.ttl = ttl;
+        JwtUtil.ttl = ttl;
     }
 
     /**
@@ -40,7 +42,7 @@ public class JwtUtil {
      * @param roles 角色
      * @return token string
      */
-    public String createJWT(String id, String subject, String roles) {
+    public static String createJWT(String id, String subject, String roles) {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
         JwtBuilder builder = Jwts.builder().setId(id)
@@ -60,7 +62,7 @@ public class JwtUtil {
      * @param jwtStr token
      * @return Claims
      */
-    public Claims parseJWT(String jwtStr) {
+    public static Claims parseJWT(String jwtStr) {
         return Jwts.parser()
                 .setSigningKey(key)
                 .parseClaimsJws(jwtStr)

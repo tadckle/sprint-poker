@@ -16,19 +16,17 @@ import org.zhxie.sprinpoker.util.JwtUtil;
 @SpringBootTest
 public class JwtUtilTest {
 
-    @Autowired
-    private JwtUtil jwtUtil;
     public static String TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoiamlhbnlhbmciLCJpYXQiOjE1NDcwODU2NDAsInJvbGVzIjoidXNlciIsImV4cCI6MTg2MjQ0NTY0MH0.wreXE_sGtdJ2O43j9PTiB2zS3fMyX6zyMXEPQgMZ4UY";
 
     @Test
     public void testCreateJWT() {
-        String token = jwtUtil.createJWT("1", "jianyang", "user");
+        String token = JwtUtil.createJWT("1", "jianyang", "user");
         System.out.println(token);
     }
 
     @Test
     public void testParseJWT() {
-        Claims claims = jwtUtil.parseJWT(TOKEN);
+        Claims claims = JwtUtil.parseJWT(TOKEN);
         String id = claims.getId();
         String roles = claims.get("roles", String.class);
         Assert.assertEquals("1", id);

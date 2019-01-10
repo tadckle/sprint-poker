@@ -22,8 +22,6 @@ public class UserLoginController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private JwtUtil jwtUtil;
 
     @RequestMapping(value="/regist",method= RequestMethod.POST)
     public ResponseResult regist(@RequestBody User user) {
@@ -43,7 +41,7 @@ public class UserLoginController {
             return new ResponseResult(ResponseResult.LOGIN_ERROR, "用户名或密码错误");
         } else {
             //生成token
-            String token = jwtUtil.createJWT(findUser.getId().toString(),
+            String token = JwtUtil.createJWT(findUser.getId().toString(),
                     findUser.getUserName(), "user");
             Map<String, Object> data = Maps.newHashMap();
             data.put("token",token);

@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class JwtInterceptor extends HandlerInterceptorAdapter {
-    @Autowired
-    private JwtUtil jwtUtil;
 
     @Override
     public boolean preHandle(HttpServletRequest request,
@@ -25,7 +23,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
         final String authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             final String token = authHeader.substring(7); // The part after "Bearer "
-            Claims claims = jwtUtil.parseJWT(token);
+            Claims claims = JwtUtil.parseJWT(token);
             if (claims != null) {
                 if ("admin".equals(claims.get("roles"))) {//如果是管理员
                     request.setAttribute("admin_claims", claims);
