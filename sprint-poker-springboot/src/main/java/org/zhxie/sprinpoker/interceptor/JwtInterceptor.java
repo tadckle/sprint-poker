@@ -26,10 +26,10 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
             Claims claims = JwtUtil.parseJWT(token);
             if (claims != null) {
                 if ("admin".equals(claims.get("roles"))) {//如果是管理员
-                    request.setAttribute("admin_claims", claims);
+                    request.setAttribute("roles", "admin");
                 }
                 if ("user".equals(claims.get("roles"))) {//如果是用户
-                    request.setAttribute("user_claims", claims);
+                    request.setAttribute("roles", "user");
                 }
             }
         }

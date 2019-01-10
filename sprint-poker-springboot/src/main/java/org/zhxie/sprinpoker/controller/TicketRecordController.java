@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.zhxie.sprinpoker.domain.TicketRecord;
 import org.zhxie.sprinpoker.service.TicketRecordService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,8 @@ public class TicketRecordController {
 
     @Autowired
     private TicketRecordService ticketRecordService;
+    @Autowired
+    private HttpServletRequest request;
 
     @RequestMapping(method = RequestMethod.GET)
     public Page<TicketRecord> queryByDate(@RequestParam(defaultValue = "") String ticketNum, @RequestParam(defaultValue = "") String date, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "50") int pageLimit) {
@@ -35,35 +38,52 @@ public class TicketRecordController {
     }
 
     @RequestMapping( method = RequestMethod.POST)
-    public Boolean save(@RequestBody TicketRecord ticketRecord) {
+    public ResponseResult save(@RequestBody TicketRecord ticketRecord) {
+        String roles = (String) request.getAttribute("roles");
+        if (Strings.isNullOrEmpty(roles)) {
+            return new ResponseResult(ResponseResult.NEED_LOGIN, "请先登录");
+        }
         ticketRecord.setId(null);
         ticketRecord.setDate(LocalDate.now());
-        TicketRecord result = ticketRecordService.save(ticketRecord);
-        return result != null;
+        ticketRecordService.save(ticketRecord);
+        return new ResponseResult(ResponseResult.SUCCESS, "保存成功！");
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Boolean update(@PathVariable int id, @RequestBody TicketRecord ticketRecord) {
+    public ResponseResult update(@PathVariable int id, @RequestBody TicketRecord ticketRecord) {
+        String roles = (String) request.getAttribute("roles");
+        if (Strings.isNullOrEmpty(roles)) {
+            return new ResponseResult(ResponseResult.NEED_LOGIN, "请先登录");
+        }
+
         Optional<TicketRecord> optional = ticketRecordService.findById(id);
         if (!optional.isPresent()){
-            return false;
+            return new ResponseResult(ResponseResult.FAIL, "记录不存在");
         }
         ticketRecord.setId(id);
         ticketRecord.setDate(optional.get().getDate());
-        TicketRecord result = ticketRecordService.save(ticketRecord);
-        return result != null;
+        ticketRecordService.save(ticketRecord);
+        return new ResponseResult(ResponseResult.SUCCESS, "修改成功！");
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public Boolean deleteById(@PathVariable int id) {
+    public ResponseResult deleteById(@PathVariable int id) {
+        String roles = (String) request.getAttribute("roles");
+        if (Strings.isNullOrEmpty(roles)) {
+            return new ResponseResult(ResponseResult.NEED_LOGIN, "请先登录");
+        }
         ticketRecordService.deleteById(id);
-        return true;
+        return new ResponseResult(ResponseResult.SUCCESS, "删除成功！");
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public Boolean deleteByIds(@RequestBody List<Integer> ids) {
+    public ResponseResult deleteByIds(@RequestBody List<Integer> ids) {
+        String roles = (String) request.getAttribute("roles");
+        if (Strings.isNullOrEmpty(roles)) {
+            return new ResponseResult(ResponseResult.NEED_LOGIN, "请先登录");
+        }
         ticketRecordService.deleteByIds(ids);
-        return true;
+        return new ResponseResult(ResponseResult.SUCCESS, "删除成功！");
     }
 
 }

@@ -9,8 +9,11 @@ import java.util.Map;
  */
 public class ResponseResult {
     public static final int SUCCESS = 2000;
+    public static final int NEED_LOGIN = 3000;
     public static final int LOGIN_ERROR = 4000;
     public static final int REGIST_ERROR = 4001;
+    public static final int FAIL = 4002;
+
     private int statusCode;
     private String message;
     private Map<String, Object> data = Maps.newHashMap();
