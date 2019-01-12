@@ -29,7 +29,6 @@ public class TicketRecordService {
     @Transactional
     public void deleteById(int id) {
         ticketRecordDAO.deleteById(id);
-        int i = 1/0;
     }
 
     @CacheEvict(value = "ticketRecord", allEntries = true)
