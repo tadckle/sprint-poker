@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zhxie.sprinpoker.domain.TicketRecord;
 import org.zhxie.sprinpoker.repository.dao.ITicketRecordDAO;
 
@@ -25,17 +26,21 @@ public class TicketRecordService {
     }
 
     @CacheEvict(value = "ticketRecord", key = "#id")
+    @Transactional
     public void deleteById(int id) {
         ticketRecordDAO.deleteById(id);
+        int i = 1/0;
     }
 
     @CacheEvict(value = "ticketRecord", allEntries = true)
+    @Transactional
     public void deleteByIds(List<Integer> ids) {
         List<TicketRecord> ticketRecords = ids.stream().map(id -> new TicketRecord(id)).collect(Collectors.toList());
         ticketRecordDAO.deleteInBatch(ticketRecords);
     }
 
     @CacheEvict(value = "ticketRecord", key = "#ticketRecord.id")
+    @Transactional
     public TicketRecord save(TicketRecord ticketRecord) {
         return ticketRecordDAO.save(ticketRecord);
     }
