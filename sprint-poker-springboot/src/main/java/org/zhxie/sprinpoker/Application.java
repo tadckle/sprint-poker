@@ -2,10 +2,13 @@ package org.zhxie.sprinpoker;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.SpringApplication;
+import org.springframework.cache.annotation.EnableCaching;
+
 /**
  * Created by zhxie on 11/16/2018.
  */
 @SpringBootApplication
+@EnableCaching
 public class Application {
 
     public static void main(String[] args) {

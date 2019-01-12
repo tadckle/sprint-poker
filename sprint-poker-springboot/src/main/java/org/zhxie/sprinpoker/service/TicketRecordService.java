@@ -1,5 +1,7 @@
 package org.zhxie.sprinpoker.service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,19 +19,23 @@ public class TicketRecordService {
     @Autowired
     private ITicketRecordDAO ticketRecordDAO;
 
+    @Cacheable(value = "ticketRecord", key = "#id")
     public Optional<TicketRecord> findById(int id) {
         return ticketRecordDAO.findById(id);
     }
 
+    @CacheEvict(value = "ticketRecord", key = "#id")
     public void deleteById(int id) {
         ticketRecordDAO.deleteById(id);
     }
 
+    @CacheEvict(value = "ticketRecord", allEntries = true)
     public void deleteByIds(List<Integer> ids) {
         List<TicketRecord> ticketRecords = ids.stream().map(id -> new TicketRecord(id)).collect(Collectors.toList());
         ticketRecordDAO.deleteInBatch(ticketRecords);
     }
 
+    @CacheEvict(value = "ticketRecord", key = "#ticketRecord.id")
     public TicketRecord save(TicketRecord ticketRecord) {
         return ticketRecordDAO.save(ticketRecord);
     }
