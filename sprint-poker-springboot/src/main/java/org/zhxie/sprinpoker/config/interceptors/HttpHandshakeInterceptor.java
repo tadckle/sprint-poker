@@ -1,15 +1,20 @@
-package org.zhxie.sprinpoker.config;
+package org.zhxie.sprinpoker.config.interceptors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
+import org.zhxie.sprinpoker.repository.SocketSessionRegistry;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 public class HttpHandshakeInterceptor implements HandshakeInterceptor {
+
+  @Autowired
+  SocketSessionRegistry socketSessionRegistry;
 
   @Override
   public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
@@ -25,6 +30,12 @@ public class HttpHandshakeInterceptor implements HandshakeInterceptor {
   @Override
   public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
                              Exception exception) {
-
+    if (request instanceof ServletServerHttpRequest) {
+      ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
+      HttpSession session = servletRequest.getServletRequest().getSession();
+      socketSessionRegistry.removeSession(session.getId());
+    }
   }
+
+
 }

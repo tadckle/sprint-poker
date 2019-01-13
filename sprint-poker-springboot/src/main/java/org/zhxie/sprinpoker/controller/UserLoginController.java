@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.zhxie.sprinpoker.domain.User;
+import org.zhxie.sprinpoker.domain.protocol.ResponseResult;
 import org.zhxie.sprinpoker.service.UserService;
 import org.zhxie.sprinpoker.util.JwtUtil;
 

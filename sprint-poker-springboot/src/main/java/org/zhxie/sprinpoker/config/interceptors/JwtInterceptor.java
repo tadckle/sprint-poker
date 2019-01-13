@@ -1,7 +1,6 @@
-package org.zhxie.sprinpoker.interceptor;
+package org.zhxie.sprinpoker.config.interceptors;
 
 import io.jsonwebtoken.Claims;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.zhxie.sprinpoker.util.JwtUtil;

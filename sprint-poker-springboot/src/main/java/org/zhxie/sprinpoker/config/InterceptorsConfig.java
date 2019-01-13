@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-import org.zhxie.sprinpoker.interceptor.JwtInterceptor;
+import org.zhxie.sprinpoker.config.interceptors.JwtInterceptor;
 
 /**
  * Created by jianyang on 2019/1/9.

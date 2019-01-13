@@ -23,6 +23,11 @@ public class LoginController {
     if (userId == null || userId.equals("")) {
       return new State(false, userId);
     }
+
+    if (sessionRepo.hasUserLogined(userId)) {
+      // the used has been logined, can't use this name again.
+      return new State(false, userId);
+    }
     final String sessionId = headerAccessor.getSessionAttributes().get("sessionId").toString();
     sessionRepo.registerSessionId(userId, sessionId);
     return new State(true, userId);

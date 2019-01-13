@@ -118,4 +118,23 @@ public class SocketSessionRegistry {
       }
     }
   }
+
+  public boolean hasUserLogined(String userId) {
+    return userSessionIds.containsKey(userId) && !userSessionIds.get(userId).isEmpty();
+  }
+
+  public void removeSession(String sessionId) {
+    String exitUserId = "";
+    synchronized (this.lock) {
+      for (Map.Entry<String, Set<String>> user2SessionId : userSessionIds.entrySet()) {
+        Set<String> sessionIdValues = user2SessionId.getValue();
+        sessionIdValues.remove(sessionId);
+        if (sessionIdValues.isEmpty()) {
+          exitUserId = user2SessionId.getKey();
+          break;
+        }
+      }
+      userSessionIds.remove(exitUserId);
+    }
+  }
 }

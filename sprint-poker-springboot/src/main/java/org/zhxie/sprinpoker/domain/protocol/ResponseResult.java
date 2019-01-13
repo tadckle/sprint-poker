@@ -1,4 +1,4 @@
-package org.zhxie.sprinpoker.controller;
+package org.zhxie.sprinpoker.domain.protocol;
 
 import com.google.common.collect.Maps;
 
