@@ -28,7 +28,7 @@ public class RoomController {
   @MessageMapping("/addRoom")
   @SendTo("/pocker/rooms")
   public List<Room> addRoom(Room room) {
-    webAgentSessionRegistry.addRoom(room);
+    webAgentSessionRegistry.createRoom(room);
     return webAgentSessionRegistry.getRooms();
   }
 

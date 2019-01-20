@@ -41,10 +41,10 @@ public class TicketRecordController {
   }
 
   @RequestMapping(method = RequestMethod.POST)
-  public ResponseResult save(TicketRecord ticketRecord) {
-    ticketRecord.setId(null);
-    ticketRecord.setDate(LocalDate.now());
-    ticketRecordService.save(ticketRecord);
+  public ResponseResult save(@RequestBody  TicketRecord ticketRecord) {
+//    ticketRecord.setId(null);
+//    ticketRecord.setDate(LocalDate.now());
+//    ticketRecordService.save(ticketRecord);
     return new ResponseResult(ResponseResult.SUCCESS, "保存成功！");
   }
 
@@ -54,8 +54,8 @@ public class TicketRecordController {
     if (!optional.isPresent()) {
       return new ResponseResult(ResponseResult.FAIL, "记录不存在");
     }
-    ticketRecord.setId(id);
-    ticketRecord.setDate(optional.get().getDate());
+//    ticketRecord.setId(id);
+//    ticketRecord.setDate(optional.get().getDate());
     ticketRecordService.save(ticketRecord);
     return new ResponseResult(ResponseResult.SUCCESS, "修改成功！");
   }

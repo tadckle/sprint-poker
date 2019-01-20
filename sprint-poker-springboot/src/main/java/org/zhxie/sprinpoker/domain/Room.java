@@ -1,5 +1,11 @@
 package org.zhxie.sprinpoker.domain;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+
+import java.util.List;
+import java.util.Set;
+
 public class Room {
 
 	private String roomNum;
@@ -9,6 +15,8 @@ public class Room {
 	private String name;
 
 	private String desc;
+
+	private final Set<Player> players = Sets.newHashSet();
 
 	public Room() {
 
@@ -56,5 +64,26 @@ public class Room {
 
   public void setDesc(String desc) {
     this.desc = desc;
+  }
+
+  public List<Player> getPlayer() {
+    return Lists.newArrayList(players);
+  }
+
+  public boolean hasPlayer(String playerName) {
+	  for (Player p: players) {
+	    if (p.getName().equals(playerName)) {
+	      return true;
+      }
+    }
+	  return false;
+  }
+
+  public void add(Player player) {
+	  players.add(player);
+  }
+
+  public void removePlayer(String exitUserId) {
+    players.removeIf(p -> p.getName().equals(exitUserId));
   }
 }

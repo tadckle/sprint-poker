@@ -21,8 +21,7 @@ public class SocketSessionRegistry {
   //这个集合存储session
   private final ConcurrentMap<String, Set<String>> userSessionIds = new ConcurrentHashMap();
   private final Object lock = new Object();
-  private static final List<Room> rooms = Lists.newArrayList();
-  private static final Map<String, List<Player>> roomId2PlayersMap = Maps.newHashMap();
+  private static final Map<String, Room> roomId2Room = Maps.newHashMap();
 
   public SocketSessionRegistry() {
   }
@@ -71,48 +70,50 @@ public class SocketSessionRegistry {
   }
 
   public List<Room> getRooms() {
-    return rooms;
+    return Lists.newArrayList(roomId2Room.values());
   }
 
   public List<Player> getPlayersByRoomID(String roomID) {
-    return roomId2PlayersMap.getOrDefault(roomID, Lists.newArrayList());
+    return roomId2Room.get(roomID).getPlayer();
   }
 
   public void joinRoom(String roomID, String userId) {
     Player player = new Player(userId);
-    if (roomId2PlayersMap.containsKey(roomID)) {
-      roomId2PlayersMap.get(roomID).add(player);
+
+    if (roomId2Room.containsKey(roomID)) {
+      roomId2Room.get(roomID).add(player);
     } else {
-      roomId2PlayersMap.put(roomID, Lists.newArrayList(player));
+      Room room = new Room();
+      room.add(player);
+      roomId2Room.put(roomID, room);
     }
   }
 
   public String getUserIdBySessionId(String sessionID) throws CommandException {
     String userId = "";
-    for(Map.Entry<String, Set<String>>user2SessionID : getAllSessionIds().entrySet()) {
+    for (Map.Entry<String, Set<String>> user2SessionID : getAllSessionIds().entrySet()) {
       if (user2SessionID.getValue().contains(sessionID)) {
         userId = user2SessionID.getKey();
       }
     }
-    if(!Strings.isNullOrEmpty(userId)) {
+    if (!Strings.isNullOrEmpty(userId)) {
       return userId;
     }
     throw new CommandException();
   }
 
-  public boolean isInRoom(String roomName,String userId) {
-    return roomId2PlayersMap.get(roomName).contains(userId);
+  public boolean isInRoom(String roomName, String userId) {
+    return roomId2Room.get(roomName).hasPlayer(userId);
   }
 
-  public void addRoom(Room room) {
-    room.setRoomNum(String.valueOf(getRooms().size()));
-    rooms.add(room);
-    roomId2PlayersMap.put(room.getName(), Lists.newArrayList());
+  public void createRoom(Room room) {
+    room.setRoomNum(String.valueOf(roomId2Room.size()));
+    roomId2Room.put(room.getName(), room);
   }
 
   public void updateRoomScoreByPlayer(Player player, String roomName) {
-    List<Player> players = roomId2PlayersMap.getOrDefault(roomName, Lists.newArrayList());
-    for (Player p: players) {
+    List<Player> players = roomId2Room.get(roomName).getPlayer();
+    for (Player p : players) {
       if (p.getName().equals(player.getName())) {
         p.setFibonacciNum(player.getFibonacciNum());
       }
@@ -135,6 +136,9 @@ public class SocketSessionRegistry {
         }
       }
       userSessionIds.remove(exitUserId);
+      for (Room room : roomId2Room.values()) {
+        room.removePlayer(exitUserId);
+      }
     }
   }
 }
