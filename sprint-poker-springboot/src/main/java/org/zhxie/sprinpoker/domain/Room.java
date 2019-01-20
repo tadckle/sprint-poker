@@ -86,4 +86,8 @@ public class Room {
   public void removePlayer(String exitUserId) {
     players.removeIf(p -> p.getName().equals(exitUserId));
   }
+
+  public boolean isEmpty() {
+	  return players.isEmpty();
+  }
 }

@@ -136,8 +136,16 @@ public class SocketSessionRegistry {
         }
       }
       userSessionIds.remove(exitUserId);
+      Room emtpyRoom = null;
       for (Room room : roomId2Room.values()) {
         room.removePlayer(exitUserId);
+        if (room.isEmpty()) {
+          emtpyRoom = room;
+          break;
+        }
+      }
+      if (emtpyRoom != null) {
+        roomId2Room.remove(emtpyRoom);
       }
     }
   }

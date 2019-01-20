@@ -1,4 +1,4 @@
-package org.zhxie.sprinpoker.domain.protocol;
+package org.zhxie.sprinpoker.domain.dto;
 
 import com.google.common.collect.Maps;
 

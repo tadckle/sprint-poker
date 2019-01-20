@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
 import org.zhxie.sprinpoker.domain.TicketRecord;
-import org.zhxie.sprinpoker.domain.protocol.ResponseResult;
+import org.zhxie.sprinpoker.domain.dto.ResponseResult;
 import org.zhxie.sprinpoker.service.TicketRecordService;
 
 import javax.servlet.http.HttpServletRequest;
