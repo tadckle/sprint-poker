@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.zhxie.sprinpoker.domain.User;
-import org.zhxie.sprinpoker.domain.protocol.ResponseResult;
+import org.zhxie.sprinpoker.domain.dto.ResponseResult;
 import org.zhxie.sprinpoker.service.UserService;
 import org.zhxie.sprinpoker.util.JwtUtil;
 
@@ -18,14 +18,14 @@ import java.util.Map;
  */
 
 @RestController
-@RequestMapping("/poker/user")
+@RequestMapping("/usr")
 public class UserLoginController {
 
     @Autowired
     private UserService userService;
 
     @RequestMapping(value="/regist",method= RequestMethod.POST)
-    public ResponseResult regist(@RequestBody User user) {
+    public ResponseResult regist(User user) {
         User findUser = userService.findByUserName(user.getUserName());
         if (findUser != null) {
             return new ResponseResult(ResponseResult.REGIST_ERROR, "用户名已经被注册");
