@@ -5,6 +5,8 @@ MySQL - 5.7.24-log
 */
 /*!40101 SET NAMES utf8 */;
 
+create
+
 CREATE TABLE `ticket_record` (
 	`id` int (11),
 	`ticket_num` text ,
