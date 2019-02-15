@@ -1,5 +1,7 @@
 server:
   port: 8080
+  tomcat:
+    uri-encoding: UTF-8
 spring:
   application:
     name: sprint-poker #指定服务名
