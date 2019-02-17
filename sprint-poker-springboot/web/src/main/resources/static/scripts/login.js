@@ -53,6 +53,8 @@ function verSubmit()
 {
     var uname = $.trim($("#username").val());
     var passwd = $.trim($("#password").val());
+    console.log("uname:" + uname);
+    console.log("passwd" + passwd);
     if(uname == "" || uname == null || uname == "您的用户名")
     {
 
@@ -67,16 +69,15 @@ function verSubmit()
         return false;
     }
 
-    var vilidcode = $.trim($("#checkCode").val());
-    if(vilidcode == "" || vilidcode == null || vilidcode == "验证码")
-    {
-        alert("验证码不能为空,请输入验证码!")
-        $("#checkCode").focus();
-        return false;
-    }
-
-    checkcode(vilidcode);
-
+//    var vilidcode = $.trim($("#checkCode").val());
+//    if(vilidcode == "" || vilidcode == null || vilidcode == "验证码")
+//    {
+//        alert("验证码不能为空,请输入验证码!")
+//        $("#checkCode").focus();
+//        return false;
+//    }
+//   checkcode(vilidcode);
+  $("#loginForm").submit();
 }
 
 function reloadImg(){
