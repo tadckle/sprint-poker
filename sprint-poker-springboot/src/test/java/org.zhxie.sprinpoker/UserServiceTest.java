@@ -27,7 +27,7 @@ public class UserServiceTest {
         User user = new User();
         user.setUserName("jianyang");
         user.setPassword("123");
-        user.setEmail("jian.yang@asml.com");
+        user.setEmail("naijgnay@163.com");
         if (userService.findByUserName("jianyang") == null) {
             User savedUser = userService.save(user);
             Assert.assertEquals(user.getUserName(), savedUser.getUserName());

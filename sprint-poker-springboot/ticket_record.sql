@@ -21,4 +21,4 @@ CREATE TABLE `user` (
 	`password` text ,
 	`email` text
 );
-insert into `user` (`id`, `user_name`, `password`, `email`) values('1','jianyang','$2a$10$5wJcLP1Bx3.iJ/Jyrtc/nOcbIMOiDeZiP3sF.Pe.lG68CFuHBfiYS','jian.yang@asml.com');
+insert into `user` (`id`, `user_name`, `password`, `email`) values('1','jianyang','$2a$10$5wJcLP1Bx3.iJ/Jyrtc/nOcbIMOiDeZiP3sF.Pe.lG68CFuHBfiYS','naijgnay@163.com');
