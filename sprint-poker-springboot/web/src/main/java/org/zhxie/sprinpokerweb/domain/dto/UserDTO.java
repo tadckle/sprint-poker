@@ -1,10 +1,12 @@
 package org.zhxie.sprinpokerweb.domain.dto;
 
+import lombok.Data;
+
+@Data
 public class UserDTO {
 
    private String userName;
    private String password;
-   private String matchPassword;
 
   public String getUserName() {
     return userName;
@@ -20,13 +22,5 @@ public class UserDTO {
 
   public void setPassword(String password) {
     this.password = password;
-  }
-
-  public String getMatchPassword() {
-    return matchPassword;
-  }
-
-  public void setMatchPassword(String matchPassword) {
-    this.matchPassword = matchPassword;
   }
 }

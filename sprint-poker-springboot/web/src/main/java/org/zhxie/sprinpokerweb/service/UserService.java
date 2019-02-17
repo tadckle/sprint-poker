@@ -14,8 +14,7 @@ import org.zhxie.sprinpokerweb.repository.dao.IUserDAO;
 public class UserService {
     @Autowired
     private IUserDAO userDAO;
-    @Autowired
-    private BCryptPasswordEncoder encoder;
+    private BCryptPasswordEncoder encoder =  new BCryptPasswordEncoder();
 
     public User save(User user) {
         String encodePassword = encoder.encode(user.getPassword());
