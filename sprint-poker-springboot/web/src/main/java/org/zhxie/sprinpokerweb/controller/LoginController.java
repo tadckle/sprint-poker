@@ -3,7 +3,11 @@ package org.zhxie.sprinpokerweb.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.zhxie.sprinpokerweb.domain.User;
+import org.zhxie.sprinpokerweb.domain.dto.ResponseResult;
 import org.zhxie.sprinpokerweb.repository.SocketSessionRegistry;
+import org.zhxie.sprinpokerweb.service.UserService;
 
 /**
  * Created by zhxie on 11/16/2018.
@@ -11,6 +15,9 @@ import org.zhxie.sprinpokerweb.repository.SocketSessionRegistry;
 
 @Controller
 public class LoginController {
+
+  @Autowired
+  private UserService userService;
 
   @Autowired
   private SocketSessionRegistry sessionRepo;
@@ -61,4 +68,6 @@ public class LoginController {
   public String login(){
     return "login";
   }
+
+
 }
