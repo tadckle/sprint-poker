@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.zhxie.sprinpokerweb.domain.User;
+import org.zhxie.sprinpokerweb.domain.dto.UserDTO;
 import org.zhxie.sprinpokerweb.service.UserService;
 
 /**
@@ -24,7 +25,7 @@ public class UserServiceTest {
 
     @Test
     public void testSave() {
-        User user = new User();
+        UserDTO user = new UserDTO();
         user.setUserName("jianyang");
         user.setPassword("123");
         user.setEmail("jian.yang@asml.com");

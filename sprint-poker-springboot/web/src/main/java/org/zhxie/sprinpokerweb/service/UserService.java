@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.zhxie.sprinpokerweb.domain.User;
+import org.zhxie.sprinpokerweb.domain.dto.UserDTO;
 import org.zhxie.sprinpokerweb.repository.dao.IUserDAO;
 
 /**
@@ -14,9 +15,14 @@ import org.zhxie.sprinpokerweb.repository.dao.IUserDAO;
 public class UserService {
     @Autowired
     private IUserDAO userDAO;
-    private BCryptPasswordEncoder encoder =  new BCryptPasswordEncoder();
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
-    public User save(User user) {
+    public User save(UserDTO userDTO) {
+        User user = new User();
+        user.setUserName(userDTO.getUserName());
+        user.setPassword(userDTO.getPassword());
+        user.setEmail(userDTO.getEmail());
         String encodePassword = encoder.encode(user.getPassword());
         user.setPassword(encodePassword);
         return userDAO.save(user);

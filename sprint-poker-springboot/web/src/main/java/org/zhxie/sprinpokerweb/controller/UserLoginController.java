@@ -38,8 +38,8 @@ public class UserLoginController {
     }
 
     @RequestMapping(value="/user/regist",method= RequestMethod.POST)
-    public ResponseResult regist(@RequestBody UserDTO userDTO) {
-        User findUser = userService.findByUserName(userDTO.getUserName());
+    public ResponseResult regist(@RequestBody UserDTO user) {
+        User findUser = userService.findByUserName(user.getUserName());
         if (findUser != null) {
             return new ResponseResult(ResponseResult.REGIST_ERROR, "用户名已经被注册");
         }
