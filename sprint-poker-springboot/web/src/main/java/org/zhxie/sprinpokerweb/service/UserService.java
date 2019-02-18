@@ -15,15 +15,13 @@ import org.zhxie.sprinpokerweb.repository.dao.IUserDAO;
 public class UserService {
     @Autowired
     private IUserDAO userDAO;
-    @Autowired
-    private BCryptPasswordEncoder encoder;
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User save(UserDTO userDTO) {
         User user = new User();
         user.setUserName(userDTO.getUserName());
-        user.setPassword(userDTO.getPassword());
         user.setEmail(userDTO.getEmail());
-        String encodePassword = encoder.encode(user.getPassword());
+        String encodePassword = encoder.encode(userDTO.getPassword());
         user.setPassword(encodePassword);
         return userDAO.save(user);
     }

@@ -29,10 +29,11 @@ function signin() {
         let request = new XMLHttpRequest()
         let url = "http://localhost:8080/user/regist";
         request.open("POST", url, true)
-        request.setRequestHeader('Content-type','application/x-www-form-urlencoded; charset=utf-8');
+        request.setRequestHeader('Content-type','application/json; charset=utf-8');
         let formData = {};
         formData.userName =  user.value
         formData.password = passwd.value
+        //formData.email = ''
         console.log(JSON.stringify(formData))
         let callback2 = function () {
             if (this.readyState == 4) {
@@ -40,7 +41,7 @@ function signin() {
                 callback.call(this, this.response)
             }
         }
-        request.send(formData)
+        request.send(JSON.stringify(formData))
 
     }
     let status = document.getElementById("status").getElementsByTagName("i")
