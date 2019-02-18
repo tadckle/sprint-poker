@@ -20,15 +20,13 @@ import org.zhxie.sprinpokerweb.service.UserService;
 public class UserServiceTest {
     @Autowired
     private UserService userService;
-    @Autowired
-    private BCryptPasswordEncoder encoder;
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Test
     public void testSave() {
         UserDTO user = new UserDTO();
         user.setUserName("jianyang");
         user.setPassword("123");
-        user.setEmail("jian.yang@asml.com");
         if (userService.findByUserName("jianyang") == null) {
             User savedUser = userService.save(user);
             Assert.assertEquals(user.getUserName(), savedUser.getUserName());
