@@ -8,10 +8,6 @@ body {
     height: 100%;
 }
 
-@font-face {
-    font-family: 'neo';
-    src: url("font/NEOTERICc.ttf");
-}
 input:focus{
 	outline: none;
 }

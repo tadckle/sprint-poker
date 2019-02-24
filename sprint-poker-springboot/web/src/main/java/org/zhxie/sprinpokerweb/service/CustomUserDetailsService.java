@@ -25,10 +25,12 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new SecurityUser(user);
     }
 
-    public static class SecurityUser implements UserDetails {
+    public static class SecurityUser extends User implements UserDetails {
 
         public SecurityUser(User user) {
-
+            this.setEmail(user.getEmail());
+            this.setUserName(user.getUserName());
+            this.setPassword(user.getPassword());
         }
 
         @Override
@@ -38,32 +40,32 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         @Override
         public String getPassword() {
-            return null;
+            return super.getPassword();
         }
 
         @Override
         public String getUsername() {
-            return null;
+            return super.getUserName();
         }
 
         @Override
         public boolean isAccountNonExpired() {
-            return false;
+            return true;
         }
 
         @Override
         public boolean isAccountNonLocked() {
-            return false;
+            return true;
         }
 
         @Override
         public boolean isCredentialsNonExpired() {
-            return false;
+            return true;
         }
 
         @Override
         public boolean isEnabled() {
-            return false;
+            return true;
         }
     }
 }
