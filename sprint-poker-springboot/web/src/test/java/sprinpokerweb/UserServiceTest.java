@@ -3,12 +3,12 @@ package org.zhxie.sprinpokerweb;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.persistent.entity.User;
+import org.persistent.entity.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.zhxie.sprinpokerweb.domain.User;
-import org.zhxie.sprinpokerweb.domain.dto.UserDTO;
 import org.zhxie.sprinpokerweb.service.UserService;
 
 /**
@@ -29,7 +29,7 @@ public class UserServiceTest {
         user.setPassword("123");
         if (userService.findByUserName("jianyang") == null) {
             User savedUser = userService.save(user);
-            Assert.assertEquals(user.getUserName(), savedUser.getUserName());
+            Assert.assertEquals(user.getUserName(), savedUser.getName());
         }
     }
 

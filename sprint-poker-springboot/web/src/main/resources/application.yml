@@ -18,7 +18,12 @@ spring:
   jpa:
     database: MySQL
     show-sql: true
-
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
 jwt:
   config:
     key: asml  #密钥

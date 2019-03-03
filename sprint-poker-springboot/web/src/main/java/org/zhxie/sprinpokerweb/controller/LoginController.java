@@ -1,12 +1,9 @@
 package org.zhxie.sprinpokerweb.controller;
 
+import org.persistent.repository.SocketSessionRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.zhxie.sprinpokerweb.domain.User;
-import org.zhxie.sprinpokerweb.domain.dto.ResponseResult;
-import org.zhxie.sprinpokerweb.repository.SocketSessionRegistry;
 import org.zhxie.sprinpokerweb.service.UserService;
 
 /**

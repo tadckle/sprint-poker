@@ -1,11 +1,11 @@
 package org.zhxie.sprinpokerweb.config;
 
+import org.persistent.repository.SocketSessionRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
-import org.zhxie.sprinpokerweb.repository.SocketSessionRegistry;
 
 @Component
 public class WebSockerDisconnectListenner implements ApplicationListener<SessionDisconnectEvent> {

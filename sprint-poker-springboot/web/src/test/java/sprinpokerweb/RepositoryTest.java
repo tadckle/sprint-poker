@@ -3,11 +3,11 @@ package org.zhxie.sprinpokerweb;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.persistent.entity.TicketRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.zhxie.sprinpokerweb.domain.TicketRecord;
 import org.zhxie.sprinpokerweb.service.TicketRecordService;
 
 import java.time.LocalDate;

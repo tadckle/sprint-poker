@@ -1,11 +1,11 @@
 package org.zhxie.sprinpokerweb.controller;
 
 import com.google.common.base.Strings;
+import org.persistent.entity.TicketRecord;
+import org.persistent.entity.dto.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-import org.zhxie.sprinpokerweb.domain.TicketRecord;
-import org.zhxie.sprinpokerweb.domain.dto.ResponseResult;
 import org.zhxie.sprinpokerweb.service.TicketRecordService;
 
 import javax.servlet.http.HttpServletRequest;

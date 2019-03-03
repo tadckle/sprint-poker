@@ -3,6 +3,7 @@ package org.zhxie.sprinpokerweb;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.persistent.entity.Player;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
@@ -14,7 +15,6 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
-import org.zhxie.sprinpokerweb.domain.Player;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

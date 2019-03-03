@@ -1,12 +1,14 @@
 package org.zhxie.sprinpokerweb.controller;
 
 import com.google.common.collect.Maps;
+import org.persistent.entity.User;
+import org.persistent.entity.dto.ResponseResult;
+import org.persistent.entity.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.zhxie.sprinpokerweb.domain.User;
-import org.zhxie.sprinpokerweb.domain.dto.ResponseResult;
-import org.zhxie.sprinpokerweb.domain.dto.UserDTO;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.zhxie.sprinpokerweb.service.UserService;
 import org.zhxie.sprinpokerweb.util.JwtUtil;
 
@@ -24,13 +26,13 @@ public class UserLoginController {
 
     @RequestMapping(value="/user/login",method= RequestMethod.POST)
     public ResponseResult login(@RequestBody User user) {
-        User findUser = userService.findByUserNameAndPassword(user.getUserName(), user.getPassword());
+        User findUser = userService.findByUserNameAndPassword(user.getName(), user.getPassword());
         if (findUser == null) {
             return new ResponseResult(ResponseResult.LOGIN_ERROR, "用户名或密码错误");
         } else {
             //生成token
             String token = JwtUtil.createJWT(findUser.getId().toString(),
-                    findUser.getUserName(), "user");
+                    findUser.getName(), "user");
             Map<String, Object> data = Maps.newHashMap();
             data.put("token",token);
             return new ResponseResult(ResponseResult.SUCCESS, "登录成功", data);

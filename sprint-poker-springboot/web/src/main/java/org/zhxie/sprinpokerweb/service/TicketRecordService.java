@@ -1,11 +1,12 @@
 package org.zhxie.sprinpokerweb.service;
+
+import org.persistent.entity.TicketRecord;
+import org.persistent.repository.dao.ITicketRecordDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.zhxie.sprinpokerweb.domain.TicketRecord;
-import org.zhxie.sprinpokerweb.repository.dao.ITicketRecordDAO;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -1,9 +1,10 @@
-package org.zhxie.sprinpokerweb;
+package sprinpokerweb;
 
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.persistent.repository.SocketSessionRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -19,7 +20,6 @@ import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketClientSockJsSession;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
-import org.zhxie.sprinpokerweb.repository.SocketSessionRegistry;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
@@ -65,7 +65,7 @@ public class RoomControllerTest {
     final CountDownLatch latch = new CountDownLatch(1);
     final AtomicReference<Throwable> failure = new AtomicReference<>();
 
-    StompSessionHandler handler = new LoginingIntegrationTests.TestSessionHandler(failure) {
+    StompSessionHandler handler = new org.zhxie.sprinpokerweb.LoginingIntegrationTests.TestSessionHandler(failure) {
 
       @Override
       public void afterConnected(final StompSession session, StompHeaders connectedHeaders) {

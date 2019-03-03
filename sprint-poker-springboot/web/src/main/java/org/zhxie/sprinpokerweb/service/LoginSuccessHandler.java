@@ -2,9 +2,9 @@ package org.zhxie.sprinpokerweb.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.persistent.entity.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.zhxie.sprinpokerweb.domain.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +19,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             throws IOException, ServletException {
         User userDetails = (User)authentication.getPrincipal();
 
-        log.info("登录用户user:" + userDetails.getUserName() + "login"+request.getContextPath());
+        log.info("登录用户user:" + userDetails.getName() + "login"+request.getContextPath());
         log.info("IP:" + getIpAddress(request));
         super.onAuthenticationSuccess(request, response, authentication);
     }

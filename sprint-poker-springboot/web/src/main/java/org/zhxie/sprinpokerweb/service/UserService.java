@@ -1,11 +1,11 @@
 package org.zhxie.sprinpokerweb.service;
 
+import org.persistent.entity.User;
+import org.persistent.entity.dto.UserDTO;
+import org.persistent.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.zhxie.sprinpokerweb.domain.User;
-import org.zhxie.sprinpokerweb.domain.dto.UserDTO;
-import org.zhxie.sprinpokerweb.repository.dao.IUserDAO;
 
 /**
  * Created by jianyang on 1/7/2019.
@@ -14,12 +14,12 @@ import org.zhxie.sprinpokerweb.repository.dao.IUserDAO;
 @Service
 public class UserService {
     @Autowired
-    private IUserDAO userDAO;
+    private UserRepository userDAO;
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User save(UserDTO userDTO) {
         User user = new User();
-        user.setUserName(userDTO.getUserName());
+        user.setName(userDTO.getUserName());
         user.setEmail(userDTO.getEmail());
         String encodePassword = encoder.encode(userDTO.getPassword());
         user.setPassword(encodePassword);
@@ -27,11 +27,11 @@ public class UserService {
     }
 
     public User findByUserName(String userName) {
-        return userDAO.findByUserName(userName);
+        return userDAO.findByName(userName);
     }
 
     public User findByUserNameAndPassword(String userName, String password) {
-        User user = userDAO.findByUserName(userName);
+        User user = userDAO.findByName(userName);
         if (user != null && encoder.matches(password, user.getPassword())) {
             return user;
         } else {

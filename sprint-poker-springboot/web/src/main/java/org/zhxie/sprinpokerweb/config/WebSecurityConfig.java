@@ -1,9 +1,11 @@
 package org.zhxie.sprinpokerweb.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -15,6 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.zhxie.sprinpokerweb.service.CustomUserDetailsService;
 import org.zhxie.sprinpokerweb.service.LoginSuccessHandler;
+
+import javax.sql.DataSource;
 
 /**
  * Created by jianyang on 1/7/2019.
@@ -31,6 +35,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private SecuritySettings settings;
 
+  @Autowired @Qualifier("dataSource")
+  private DataSource dataSource;
+
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     /**
@@ -46,10 +54,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
             .and().logout().logoutSuccessUrl(settings.getLogoutsuccssurl())
             .and().exceptionHandling().accessDeniedPage(settings.getDeniedpage())
-            .and().rememberMe().tokenValiditySeconds(86400);
+            .and().rememberMe().tokenValiditySeconds(86400).tokenRepository(tokenRepository());;
   }
 
-    @Override
+  private JdbcTokenRepositoryImpl tokenRepository() {
+    JdbcTokenRepositoryImpl jtr = new JdbcTokenRepositoryImpl();
+    jtr.setDataSource(dataSource);
+    return jtr;
+  }
+
+  @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/user/regist");
     }
@@ -61,11 +75,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     auth.eraseCredentials(false);
   }
 
-//  @Bean
-//  public JdbcTokenRepositoryImpl tokenRepository(){
-//    JdbcTokenRepositoryImpl jtr = new JdbcTokenRepositoryImpl();
-//    return jtr;
-//  }
 
   @Bean
   public BCryptPasswordEncoder bcryptPasswordEncoder() {
@@ -82,4 +91,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return new LoginSuccessHandler();
   }
 
+  @Bean
+  public CustomSecurityMetadataSource securityMetadataSource() {
+    return new CustomSecurityMetadataSource(settings.getUrlroles());
+  }
+
+  @Bean
+  public CustomFilterSecurityInterceptor customFilter() throws Exception{
+    CustomFilterSecurityInterceptor customFilter = new CustomFilterSecurityInterceptor();
+    customFilter.setSecurityMetadataSource(securityMetadataSource());
+    customFilter.setAccessDecisionManager(accessDecisionManager());
+    return customFilter;
+  }
+
+  @Bean
+  public AccessDecisionManager accessDecisionManager() {
+    return new CustomAccessDecisionManager();
+  }
 }

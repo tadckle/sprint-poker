@@ -1,12 +1,12 @@
 package org.zhxie.sprinpokerweb.config.interceptors;
 
+import org.persistent.repository.SocketSessionRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
-import org.zhxie.sprinpokerweb.repository.SocketSessionRegistry;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
