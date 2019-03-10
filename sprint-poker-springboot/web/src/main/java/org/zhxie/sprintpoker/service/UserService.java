@@ -1,11 +1,11 @@
 package org.zhxie.sprintpoker.service;
 
-import org.zhxie.sprintpoker.entity.User;
-import org.zhxie.sprintpoker.entity.dto.UserDTO;
-import org.zhxie.sprintpoker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.zhxie.sprintpoker.entity.User;
+import org.zhxie.sprintpoker.entity.dto.UserDTO;
+import org.zhxie.sprintpoker.repository.UserRepository;
 
 /**
  * Created by jianyang on 1/7/2019.
@@ -15,7 +15,8 @@ import org.springframework.stereotype.Service;
 public class UserService {
     @Autowired
     private UserRepository userDAO;
-    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     public User save(UserDTO userDTO) {
         User user = new User();

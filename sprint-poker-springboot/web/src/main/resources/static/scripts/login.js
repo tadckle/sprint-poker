@@ -4,6 +4,9 @@ var confirm = document.getElementsByClassName("confirm")[0]
 var user = document.getElementById("username")
 var passwd = document.getElementById("password")
 var con_pass = document.getElementById("confirm-passwd")
+var rememberMe = document.getElementById("rememberMe")
+
+console.log(rememberMe)
 
 //自动居中title
 var name_c = document.getElementById("title")
@@ -47,6 +50,7 @@ function signin() {
     let status = document.getElementById("status").getElementsByTagName("i")
     if (onoff) {
         confirm.style.height = 51 + "px"
+        rememberMe.style.height = 0
         status[0].style.top = 35 + "px"
         status[1].style.top = 0
         onoff = !onoff
@@ -69,11 +73,12 @@ function signin() {
         //hint()
     }
 }
-function verSubmit() {
+function onlogin() {
 
     if (!onoff) {
         let status = document.getElementById("status").getElementsByTagName("i")
         confirm.style.height = 0
+        rememberMe.style.height = 51 + "px";
         status[0].style.top = 0
         status[1].style.top = 35 + "px"
         onoff = !onoff

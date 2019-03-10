@@ -307,7 +307,8 @@
                         <p class="form"><input type="password" id="password" name="password" placeholder="password"></p>
                         <p class="form confirm"><input type="password" id="confirm-passwd"
                                                        placeholder="confirm password"></p>
-                        <input type="button" id="loginBtn" value="Log in" class="btn" onclick="verSubmit()"
+                        <p id="rememberMe"><input type="checkbox" name="remember-me" onclick="if(this.checked){this.value = 1}else{this.value=0}" value="0"/>记住我</p>
+                        <input type="button" id="loginBtn" value="Log in" class="btn" onclick="onlogin()"
                                style="margin-right: 20px;">
                         <input type="button" value="Sign in" class="btn" onclick='signin()' id="btn">
                     </form>

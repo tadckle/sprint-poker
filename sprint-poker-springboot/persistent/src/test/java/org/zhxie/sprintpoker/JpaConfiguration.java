@@ -1,4 +1,4 @@
-package org.zhxie.sprintpoker.test;
+package org.zhxie.sprintpoker;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "org.persistent.repository")
+@EnableJpaRepositories(basePackages = "org.zhxie.sprintpoker")
 public class JpaConfiguration {
 
     @Bean
