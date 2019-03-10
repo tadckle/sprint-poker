@@ -8,6 +8,7 @@ import org.zhxie.sprintpoker.entity.Room;
 import org.zhxie.sprintpoker.exception.CommandException;
 import org.springframework.util.Assert;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -120,33 +121,25 @@ public class SocketSessionRegistry {
     }
   }
 
-  public boolean hasUserLogined(String userId) {
-    return userSessionIds.containsKey(userId) && !userSessionIds.get(userId).isEmpty();
-  }
-
-  public void removeSession(String sessionId) {
-    String exitUserId = "";
+  public List<Room> removeUser(String userName) {
     synchronized (this.lock) {
-      for (Map.Entry<String, Set<String>> user2SessionId : userSessionIds.entrySet()) {
-        Set<String> sessionIdValues = user2SessionId.getValue();
-        sessionIdValues.remove(sessionId);
-        if (sessionIdValues.isEmpty()) {
-          exitUserId = user2SessionId.getKey();
-          break;
-        }
-      }
-      userSessionIds.remove(exitUserId);
+      List<Room> updateRooms = Lists.newArrayList();
+      userSessionIds.remove(userName);
       Room emtpyRoom = null;
       for (Room room : roomId2Room.values()) {
-        room.removePlayer(exitUserId);
-        if (room.isEmpty()) {
-          emtpyRoom = room;
-          break;
+        if (room.hasPlayer(userName)) {
+          updateRooms.add(room);
+        }
+        room.removePlayer(userName);
+      }
+      Iterator<Map.Entry<String, Room>> iterator = roomId2Room.entrySet().iterator();
+      while (iterator.hasNext()) {
+        Map.Entry<String, Room> next = iterator.next();
+        if (next.getValue().isEmpty()) {
+          iterator.remove();
         }
       }
-      if (emtpyRoom != null) {
-        roomId2Room.remove(emtpyRoom);
-      }
+      return updateRooms;
     }
   }
 }
