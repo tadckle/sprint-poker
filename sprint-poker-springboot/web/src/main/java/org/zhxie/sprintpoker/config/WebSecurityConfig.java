@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.zhxie.sprintpoker.service.CustomUserDetailsService;
@@ -47,14 +46,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      *
      *  Disable the CORS
      */
-    http.formLogin().loginPage("/login").permitAll().successHandler(loginSuccessHandler())
-            .and().authorizeRequests()
+    http.formLogin().loginPage("/login").permitAll().successHandler(loginSuccessHandler());
+
+     http.authorizeRequests()
             .antMatchers("/images/**", "/checkcode", "/scripts/**", "/styles/**").permitAll()
-            .anyRequest().authenticated()
-            .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
-            .and().logout().logoutSuccessUrl(settings.getLogoutsuccssurl())
+            .anyRequest().authenticated();
+
+     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
+
+     http.logout().logoutSuccessUrl(settings.getLogoutsuccssurl())
             .and().exceptionHandling().accessDeniedPage(settings.getDeniedpage())
-            .and().rememberMe().tokenValiditySeconds(86400).tokenRepository(tokenRepository());;
+            .and().rememberMe().userDetailsService(customUserDetailsService)
+             .tokenValiditySeconds(86400).tokenRepository(tokenRepository());
   }
 
   private JdbcTokenRepositoryImpl tokenRepository() {
@@ -75,15 +78,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     auth.eraseCredentials(false);
   }
 
-
   @Bean
   public BCryptPasswordEncoder bcryptPasswordEncoder() {
     return new BCryptPasswordEncoder();
-  }
-
-  @Override
-  protected UserDetailsService userDetailsService() {
-    return super.userDetailsService();
   }
 
   @Bean
