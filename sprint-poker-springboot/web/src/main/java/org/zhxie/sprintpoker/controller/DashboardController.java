@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/poker/ticketRecord")
-public class TicketRecordController {
+public class DashboardController {
 
   @Autowired
   private TicketRecordService ticketRecordService;
@@ -23,21 +23,19 @@ public class TicketRecordController {
   private HttpServletRequest request;
 
   @RequestMapping(method = RequestMethod.GET)
-  public Page<TicketRecord> queryByDate(@RequestParam(defaultValue = "") String ticketNum, @RequestParam
-          (defaultValue = "") String date, @RequestParam(defaultValue = "1") int pageNum, @RequestParam
-                                                (defaultValue = "50") int pageLimit) {
-    if (!Strings.isNullOrEmpty(ticketNum) && !Strings.isNullOrEmpty(date)) {
-      LocalDate localDate = LocalDate.parse(date);
-      return ticketRecordService.queryByTicketNumAndDate(ticketNum, localDate, pageNum, pageLimit);
-    }
-    if (!Strings.isNullOrEmpty(ticketNum) && Strings.isNullOrEmpty(date)) {
-      return ticketRecordService.queryByTicketNum(ticketNum, pageNum, pageLimit);
-    }
-    if (Strings.isNullOrEmpty(ticketNum) && !Strings.isNullOrEmpty(date)) {
-      LocalDate localDate = LocalDate.parse(date);
-      return ticketRecordService.queryByDate(localDate, pageNum, pageLimit);
-    }
-    return ticketRecordService.queryAll(pageNum, pageLimit);
+  public Page<TicketRecord> getDashboardRecords(Integer page, Integer limit) {
+//    if (!Strings.isNullOrEmpty(ticketNum) && !Strings.isNullOrEmpty(date)) {
+//      LocalDate localDate = LocalDate.parse(date);
+//      return ticketRecordService.queryByTicketNumAndDate(ticketNum, localDate, pageNum, pageLimit);
+//    }
+//    if (!Strings.isNullOrEmpty(ticketNum) && Strings.isNullOrEmpty(date)) {
+//      return ticketRecordService.queryByTicketNum(ticketNum, pageNum, pageLimit);
+//    }
+//    if (Strings.isNullOrEmpty(ticketNum) && !Strings.isNullOrEmpty(date)) {
+//      LocalDate localDate = LocalDate.parse(date);
+//      return ticketRecordService.queryByDate(localDate, pageNum, pageLimit);
+//    }
+//    return ticketRecordService.queryAll(pageNum, pageLimit);
   }
 
   @RequestMapping(method = RequestMethod.POST)

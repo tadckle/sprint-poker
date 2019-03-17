@@ -104,7 +104,7 @@ public class SocketSessionRegistry {
   }
 
   public boolean isInRoom(String roomName, String userId) {
-    return roomId2Room.get(roomName).hasPlayer(userId);
+    return roomId2Room.containsKey(roomName) ? roomId2Room.get(roomName).hasPlayer(userId) : false;
   }
 
   public void createRoom(Room room) {
