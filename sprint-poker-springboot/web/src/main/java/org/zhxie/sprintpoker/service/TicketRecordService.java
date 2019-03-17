@@ -1,59 +1,47 @@
 package org.zhxie.sprintpoker.service;
 
-import org.zhxie.sprintpoker.entity.TicketRecord;
-import org.zhxie.sprintpoker.repository.dao.ITicketRecordDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.zhxie.sprintpoker.entity.TicketRecord;
+import org.zhxie.sprintpoker.repository.TicketRecordRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class TicketRecordService {
     @Autowired
-    private ITicketRecordDAO ticketRecordDAO;
+    private TicketRecordRepository ticketRecordRepository;
 
     public Optional<TicketRecord> findById(int id) {
-        return ticketRecordDAO.findById(id);
+        return ticketRecordRepository.findById(id);
     }
 
     public void deleteById(int id) {
-        ticketRecordDAO.deleteById(id);
-    }
-
-    public void deleteByIds(List<Integer> ids) {
-        List<TicketRecord> ticketRecords = ids.stream().map(id -> new TicketRecord(id)).collect(Collectors.toList());
-        ticketRecordDAO.deleteInBatch(ticketRecords);
+        ticketRecordRepository.deleteById(id);
     }
 
     public TicketRecord save(TicketRecord ticketRecord) {
-        return ticketRecordDAO.save(ticketRecord);
+        return ticketRecordRepository.save(ticketRecord);
     }
 
-    public Page<TicketRecord> queryByDate(LocalDate date, int pageNum, int pageLimit){
-        Pageable pageable = PageRequest.of(pageNum -1, pageLimit);
-        return ticketRecordDAO.findByDate(date, pageable);
-    }
+//    public Page<TicketRecord> queryByDate(LocalDate date, int pageNum, int pageLimit){
+//        Pageable pageable = PageRequest.of(pageNum -1, pageLimit);
+//        return ticketRecordRepository.findByDate(date, pageable);
+//    }
 
-    public Page<TicketRecord> queryByTicketNum(String ticketNum, int pageNum, int pageLimit){
-        Pageable pageable = PageRequest.of(pageNum -1, pageLimit);
-        return ticketRecordDAO.findByTicketNumIgnoreCase(ticketNum, pageable);
-    }
+//    public Page<TicketRecord> queryByTicketNumAndDate(String ticketNum, LocalDate date, int pageNum, int pageLimit){
+//        Pageable pageable = PageRequest.of(pageNum -1, pageLimit);
+//        return ticketRecordRepository.findByTicketNumIgnoreCaseAndDate(ticketNum, date, pageable);
+//    }
 
-    public Page<TicketRecord> queryByTicketNumAndDate(String ticketNum, LocalDate date, int pageNum, int pageLimit){
-        Pageable pageable = PageRequest.of(pageNum -1, pageLimit);
-        return ticketRecordDAO.findByTicketNumIgnoreCaseAndDate(ticketNum, date, pageable);
+    public List<TicketRecord> findAll(int pageOffset, int pageLimit){
+        Pageable pageable = PageRequest.of(pageOffset -1, pageLimit);
+        Page<TicketRecord> all = ticketRecordRepository.findAll(pageable);
+        return all.getContent();
     }
-
-    public Page<TicketRecord> queryAll(int pageNum, int pageLimit){
-        Pageable pageable = PageRequest.of(pageNum -1, pageLimit);
-        return ticketRecordDAO.findAll(pageable);
-    }
-
 
 }
