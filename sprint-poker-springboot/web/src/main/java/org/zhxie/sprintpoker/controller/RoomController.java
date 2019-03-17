@@ -1,16 +1,16 @@
 package org.zhxie.sprintpoker.controller;
 
-import org.zhxie.sprintpoker.entity.Player;
-import org.zhxie.sprintpoker.entity.Room;
-import org.zhxie.sprintpoker.exception.CommandException;
-import org.zhxie.sprintpoker.repository.SocketSessionRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
+import org.zhxie.sprintpoker.entity.Player;
+import org.zhxie.sprintpoker.entity.Room;
+import org.zhxie.sprintpoker.exception.CommandException;
+import org.zhxie.sprintpoker.repository.SocketSessionRegistry;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -21,35 +21,35 @@ public class RoomController {
 
   @MessageMapping("/rooms")
   @SendTo("/pocker/rooms")
-  public List<Room> getRoomList() {
+  public List<Room> getRoomList(Principal user) {
     return webAgentSessionRegistry.getRooms();
   }
 
   @MessageMapping("/addRoom")
   @SendTo("/pocker/rooms")
   public List<Room> addRoom(Room room) {
+//    String rememberMeCookie = CookieUtil.extractCookie(request, "remember-me");
     webAgentSessionRegistry.createRoom(room);
     return webAgentSessionRegistry.getRooms();
   }
 
   @MessageMapping("/joinPockerBoard/{roomName}")
   @SendTo("/pocker/pockerBoard/{roomName}")
-  public List<Player> joinPockerBoardByRoomId(SimpMessageHeaderAccessor headerAccessor, @DestinationVariable String
+  public List<Player> joinPockerBoardByRoomId(Principal user, @DestinationVariable String
           roomName) throws
           CommandException {
-    final String sessionId = headerAccessor.getSessionAttributes().get("sessionId").toString();
-    String userId = webAgentSessionRegistry.getUserIdBySessionId(sessionId);
-    if (!webAgentSessionRegistry.isInRoom(roomName, userId)) {
-      webAgentSessionRegistry.joinRoom(roomName, userId);
+    if (!webAgentSessionRegistry.isInRoom(roomName, user.getName())) {
+      webAgentSessionRegistry.joinRoom(roomName, user.getName());
     }
     return webAgentSessionRegistry.getPlayersByRoomID(roomName);
   }
 
   @MessageMapping("/onClickPocker/{roomName}")
   @SendTo("/pocker/pockerBoard/{roomName}")
-  public List<Player> onClickPocker(Player Player, @DestinationVariable String
+  public List<Player> onClickPocker(Principal user, Player player, @DestinationVariable String
           roomName) {
-    webAgentSessionRegistry.updateRoomScoreByPlayer(Player, roomName);
+    player.setName(user.getName());
+    webAgentSessionRegistry.updateRoomScoreByPlayer(player, roomName);
     return webAgentSessionRegistry.getPlayersByRoomID(roomName);
   }
 
