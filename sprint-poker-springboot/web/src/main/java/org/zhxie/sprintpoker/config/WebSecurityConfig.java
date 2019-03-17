@@ -58,6 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and().exceptionHandling().accessDeniedPage(settings.getDeniedpage())
             .and().rememberMe().userDetailsService(customUserDetailsService)
              .tokenValiditySeconds(86400).tokenRepository(tokenRepository());
+    http.csrf().disable();
   }
 
   private JdbcTokenRepositoryImpl tokenRepository() {
