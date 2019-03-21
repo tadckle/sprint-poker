@@ -1,5 +1,6 @@
 package org.zhxie.sprintpoker.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -10,6 +11,8 @@ import org.zhxie.sprintpoker.repository.SocketSessionRegistry;
 
 import java.util.List;
 
+
+@Slf4j
 @Component
 public class WebSockerDisconnectListenner implements ApplicationListener<SessionDisconnectEvent> {
 
@@ -21,6 +24,8 @@ public class WebSockerDisconnectListenner implements ApplicationListener<Session
 
   @Override
   public void onApplicationEvent(SessionDisconnectEvent event) {
+    String sessionId= event.getSessionId();
+    log.info("session id:{}", sessionId);
     final List<Room> rooms = socketSessionRegistry.removeUser(event.getUser().getName());
     for (Room room: rooms) {
       String roomName = room.getName();
