@@ -11,7 +11,7 @@ import org.zhxie.sprintpoker.repository.SocketSessionRegistry;
 import java.util.List;
 
 @Component
-public class WebSockerDisconnectListenner implements ApplicationListener<SessionDisconnectEvent> {
+public class WebSocketDisconnectListener implements ApplicationListener<SessionDisconnectEvent> {
 
   @Autowired
   private SimpMessagingTemplate template;
@@ -21,6 +21,8 @@ public class WebSockerDisconnectListenner implements ApplicationListener<Session
 
   @Override
   public void onApplicationEvent(SessionDisconnectEvent event) {
+    String webSocketConnectionID = event.getSessionId();
+    // remove the user in room according to the web socket session ID
     final List<Room> rooms = socketSessionRegistry.removeUser(event.getUser().getName());
     for (Room room: rooms) {
       String roomName = room.getName();
