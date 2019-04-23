@@ -26,11 +26,11 @@ public class WebSockerDisconnectListenner implements ApplicationListener<Session
   public void onApplicationEvent(SessionDisconnectEvent event) {
     String sessionId= event.getSessionId();
     log.info("session id:{}", sessionId);
-    final List<Room> rooms = socketSessionRegistry.removeUser(event.getUser().getName());
-    for (Room room: rooms) {
-      String roomName = room.getName();
-      template.convertAndSend("/pocker/pockerBoard/"+ roomName, socketSessionRegistry.getPlayersByRoomID(roomName));
-    }
+//    final List<Room> rooms = socketSessionRegistry.removeUser(event.getUser().getName());
+////    for (Room room: rooms) {
+////      String roomName = room.getName();
+////      template.convertAndSend("/pocker/pockerBoard/"+ roomName, socketSessionRegistry.getPlayersByRoomID(roomName));
+////    }
 
   }
 }

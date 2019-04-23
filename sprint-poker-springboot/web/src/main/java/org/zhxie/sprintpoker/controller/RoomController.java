@@ -28,7 +28,6 @@ public class RoomController {
   @MessageMapping("/addRoom")
   @SendTo("/pocker/rooms")
   public List<Room> addRoom(Room room) {
-//    String rememberMeCookie = CookieUtil.extractCookie(request, "remember-me");
     webAgentSessionRegistry.createRoom(room);
     return webAgentSessionRegistry.getRooms();
   }
@@ -38,6 +37,7 @@ public class RoomController {
   public List<Player> joinPockerBoardByRoomId(Principal user, @DestinationVariable String
           roomName) throws
           CommandException {
+    //TODO: join the room and remember websocket session id
     if (!webAgentSessionRegistry.isInRoom(roomName, user.getName())) {
       webAgentSessionRegistry.joinRoom(roomName, user.getName());
     }
