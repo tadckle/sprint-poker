@@ -303,6 +303,8 @@
             </div>
             <span>
                     <form th:action="@{/login}" id="loginForm" method="post">
+                        <div class="content" th:text="${exception}"/>
+                        <div class="content" th:text="${serverTime}"/>
                         <p class="form"><input type="text" id="username" name="username" placeholder="username"></p>
                         <p class="form"><input type="password" id="password" name="password" placeholder="password"></p>
                         <p class="form confirm"><input type="password" id="confirm-passwd"

@@ -100,7 +100,8 @@ function onlogin() {
             return false;
         }
 
-        $("#loginForm").submit();
+        let re = $("#loginForm").submit();
+        console.log(re);
     }
 }
 

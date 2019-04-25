@@ -2,6 +2,8 @@ package org.zhxie.sprintpoker.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 import org.zhxie.sprintpoker.entity.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -13,6 +15,7 @@ import java.io.IOException;
 
 public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
     protected Log log = LogFactory.getLog(getClass());
+    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
