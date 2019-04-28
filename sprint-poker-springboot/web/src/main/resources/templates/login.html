@@ -292,7 +292,7 @@
 <body>
 <div id="bg">
     <div id="hint"><!-- 提示框 -->
-        <p>登录失败</p>
+        <p>失败</p>
     </div>
     <div id="login_wrap">
         <div id="login"><!-- 登录注册切换动画 -->
@@ -303,8 +303,7 @@
             </div>
             <span>
                     <form th:action="@{/login}" id="loginForm" method="post">
-                        <div class="content" th:text="${exception}"/>
-                        <div class="content" th:text="${serverTime}"/>
+                        <div class="content" th:text="${msg}"/>
                         <p class="form"><input type="text" id="username" name="username" placeholder="username"></p>
                         <p class="form"><input type="password" id="password" name="password" placeholder="password"></p>
                         <p class="form confirm"><input type="password" id="confirm-passwd"

@@ -15,14 +15,14 @@ name_c.innerHTML = ""
 for (i = 0; i < name.length; i++)
     if (name[i] != ",")
         name_c.innerHTML += "<i>" + name[i] + "</i>"
-// //引用hint()在最上方弹出提示
-// function hint() {
-//     let hit = document.getElementById("hint")
-//     hit.style.display = "block"
-//     setTimeout("hit.style.opacity = 1", 0)
-//     setTimeout("hit.style.opacity = 0", 2000)
-//     setTimeout('hit.style.display = "none"', 3000)
-// }
+ //引用hint()在最上方弹出提示
+var hit = document.getElementById("hint");
+ function hint() {
+     hit.style.display = "block"
+     setTimeout("hit.style.opacity = 1", 0)
+     setTimeout("hit.style.opacity = 0", 2000)
+     setTimeout('hit.style.display = "none"', 3000)
+ }
 //注册按钮
 function signin() {
     //回调函数
@@ -36,12 +36,9 @@ function signin() {
         let formData = {};
         formData.userName =  user.value
         formData.password = passwd.value
-        //formData.email = ''
-        console.log(JSON.stringify(formData))
-        let callback2 = function () {
-            if (this.readyState == 4) {
-                console.log("回调成功")
-                callback.call(this, this.response)
+        request.onreadystatechange = function() { // Call a function when the state changes.
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+               callback(this.responseText);
             }
         }
         request.send(JSON.stringify(formData))
@@ -61,16 +58,12 @@ function signin() {
             hit.innerHTML = "两次密码不相等"
         else if (passwd.value = con_pass.value) {
             submit(function (res) {
-                if (res == "exist")
-                    hit.innerHTML = "该账号已存在"
-                else if (res == true) {
-                    hit.innerHTML = "账号注册成功，两秒后自动刷新页面"
-                    setTimeout("window.location.reload()", 2000)
-                } else if (res == false)
-                    hit.innerHTML = "账号注册失败"
+               console.log(res);
+               res = JSON.parse(res); // 先要将字符串解析成json对象
+               hit.innerHTML = res.message
             })
         }
-        //hint()
+        hint()
     }
 }
 function onlogin() {
@@ -86,8 +79,6 @@ function onlogin() {
     else {
         var uname = $.trim($("#username").val());
         var passwd = $.trim($("#password").val());
-        console.log("uname:" + uname);
-        console.log("passwd" + passwd);
         if (uname == "" || uname == null || uname == "您的用户名") {
 
             alert("用户名不能为空,请输入用户名!");

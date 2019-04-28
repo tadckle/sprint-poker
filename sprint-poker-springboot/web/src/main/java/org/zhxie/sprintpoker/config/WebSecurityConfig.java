@@ -21,6 +21,7 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.stereotype.Component;
+import org.zhxie.sprintpoker.service.AuthFailureHandler;
 import org.zhxie.sprintpoker.service.CustomUserDetailsService;
 import org.zhxie.sprintpoker.service.LoginSuccessHandler;
 
@@ -64,7 +65,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     //include /login?msg=Bad Credentials
     http.authorizeRequests()
-            .antMatchers("/images/**", "/checkcode", "/scripts/**", "/styles/**", "/login*").permitAll()
+            .antMatchers("/images/**", "/checkcode", "/scripts/**", "/styles/**", "/login*")
+            .permitAll()
             .anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll().successHandler
             (loginSuccessHandler()).failureHandler
             (authFailureHandler);
@@ -88,7 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/user/regist");
-    }
+  }
 
     @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -108,6 +110,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Bean
+  public AuthFailureHandler authFailureHandler() {return new AuthFailureHandler();}
+
+  @Bean
   public CustomSecurityMetadataSource securityMetadataSource() {
     return new CustomSecurityMetadataSource(settings.getUrlroles());
   }
@@ -125,27 +130,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return new CustomAccessDecisionManager();
   }
 
-  @Component
-  public class AuthFailureHandler extends SimpleUrlAuthenticationFailureHandler {
-    private ObjectMapper objectMapper = new ObjectMapper();
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-    @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
-            throws IOException, ServletException {
-      System.out.println("AuthFailureHandler.onAuthenticationFailure()");
-      response.setStatus(HttpStatus.UNAUTHORIZED.value());
-      Map<String, Object> data = new HashMap<>();
-      data.put(
-              "timestamp",
-              Calendar.getInstance().getTime());
-      data.put(
-              "exception",
-              exception.getMessage());
 
-      response.getOutputStream()
-              .println(objectMapper.writeValueAsString(data));
-      //redirectStrategy.sendRedirect(request, response, "/login?msg=Bad Credentials");
-    }
-  }
 
 }
