@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.zhxie.sprintpoker.entity.Player;
 import org.zhxie.sprintpoker.entity.Room;
@@ -34,8 +35,7 @@ public class RoomController {
 
   @MessageMapping("/joinPockerBoard/{roomName}")
   @SendTo("/pocker/pockerBoard/{roomName}")
-  public List<Player> joinPockerBoardByRoomId(Principal user, @DestinationVariable String
-          roomName) throws
+  public List<Player> joinPockerBoardByRoomId(Principal user, @DestinationVariable String roomName) throws
           CommandException {
     //TODO: join the room and remember websocket session id
     if (!webAgentSessionRegistry.isInRoom(roomName, user.getName())) {
