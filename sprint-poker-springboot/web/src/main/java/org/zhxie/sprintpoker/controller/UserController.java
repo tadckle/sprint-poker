@@ -44,8 +44,4 @@ public class UserController {
     return "login";
   }
 
-  @RequestMapping("/login")
-  public String loginPage() {
-    return "login";
-  }
 }

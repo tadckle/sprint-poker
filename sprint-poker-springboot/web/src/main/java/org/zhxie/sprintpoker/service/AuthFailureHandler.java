@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AuthFailureHandler extends SimpleUrlAuthenticationFailureHandler {
-  private ObjectMapper objectMapper = new ObjectMapper();
   private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
   @Override

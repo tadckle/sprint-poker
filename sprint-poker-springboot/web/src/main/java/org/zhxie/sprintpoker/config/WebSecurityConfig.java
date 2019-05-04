@@ -73,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 
-    http.logout().logoutSuccessUrl(settings.getLogoutsuccssurl())
+    http.logout().logoutUrl("/logout").deleteCookies("JSESSIONID").logoutSuccessUrl("/")
             .and().rememberMe().userDetailsService(customUserDetailsService)
             .tokenValiditySeconds(86400).tokenRepository(tokenRepository());
 
