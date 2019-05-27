@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class WebSockerDisconnectListenner implements ApplicationListener<SessionDisconnectEvent> {
+public class WebSocketDisconnectListener implements ApplicationListener<SessionDisconnectEvent> {
 
   @Autowired
   private SimpMessagingTemplate template;
@@ -31,6 +31,5 @@ public class WebSockerDisconnectListenner implements ApplicationListener<Session
 ////      String roomName = room.getName();
 ////      template.convertAndSend("/pocker/pockerBoard/"+ roomName, socketSessionRegistry.getPlayersByRoomID(roomName));
 ////    }
-
   }
 }
