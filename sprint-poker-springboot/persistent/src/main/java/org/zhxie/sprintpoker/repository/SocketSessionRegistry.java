@@ -5,13 +5,12 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.zhxie.sprintpoker.entity.Player;
 import org.zhxie.sprintpoker.entity.Room;
+import org.zhxie.sprintpoker.entity.SingleGameRecord;
+import org.zhxie.sprintpoker.entity.dto.GameDTO;
 import org.zhxie.sprintpoker.exception.CommandException;
 import org.springframework.util.Assert;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -78,6 +77,13 @@ public class SocketSessionRegistry {
     return roomId2Room.get(roomID).getPlayer();
   }
 
+  public GameDTO getSingleGameRecord(String roomID) {
+    SingleGameRecord record = roomId2Room.get(roomID).getGameRecord();
+    GameDTO dto = new GameDTO();
+    dto.setPlayerScoreList(Lists.newArrayList(record.getPlayer2Score().values()));
+    return dto;
+  }
+
   public void joinRoom(String roomID, String userId) {
     Player player = new Player(userId);
 
@@ -85,6 +91,8 @@ public class SocketSessionRegistry {
       roomId2Room.get(roomID).add(player);
     } else {
       Room room = new Room();
+      player.setHost(true);
+      room.setOwner(player.getName());
       room.add(player);
       roomId2Room.put(roomID, room);
     }
@@ -112,11 +120,12 @@ public class SocketSessionRegistry {
     roomId2Room.put(room.getName(), room);
   }
 
-  public void updateRoomScoreByPlayer(Player player, String roomName) {
-    List<Player> players = roomId2Room.get(roomName).getPlayer();
+  public void updateRoomScoreByPlayer(SingleGameRecord.SingelPlayerScore singelPlayerScore, String roomName) {
+    Room room = roomId2Room.get(roomName);
+    List<Player> players = room.getPlayer();
     for (Player p : players) {
-      if (p.getName().equals(player.getName())) {
-        p.setFibonacciNum(player.getFibonacciNum());
+      if (p.getName().equals(singelPlayerScore.getPlayerName())) {
+        room.getGameRecord().update(singelPlayerScore);
       }
     }
   }

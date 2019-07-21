@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import org.zhxie.sprintpoker.entity.Player;
 import org.zhxie.sprintpoker.entity.Room;
+import org.zhxie.sprintpoker.entity.SingleGameRecord;
+import org.zhxie.sprintpoker.entity.dto.GameDTO;
 import org.zhxie.sprintpoker.exception.CommandException;
 import org.zhxie.sprintpoker.repository.SocketSessionRegistry;
 
@@ -35,22 +35,24 @@ public class RoomController {
 
   @MessageMapping("/joinPockerBoard/{roomName}")
   @SendTo("/pocker/pockerBoard/{roomName}")
-  public List<Player> joinPockerBoardByRoomId(Principal user, @DestinationVariable String roomName) throws
+  public GameDTO joinPockerBoardByRoomId(Principal user, @DestinationVariable String roomName) throws
           CommandException {
     //TODO: join the room and remember websocket session id
+    System.out.println(user.getName());
     if (!webAgentSessionRegistry.isInRoom(roomName, user.getName())) {
       webAgentSessionRegistry.joinRoom(roomName, user.getName());
     }
-    return webAgentSessionRegistry.getPlayersByRoomID(roomName);
+    return webAgentSessionRegistry.getSingleGameRecord(roomName);
   }
 
   @MessageMapping("/onClickPocker/{roomName}")
   @SendTo("/pocker/pockerBoard/{roomName}")
-  public List<Player> onClickPocker(Principal user, Player player, @DestinationVariable String
+  public GameDTO onClickPocker(Principal user, SingleGameRecord.SingelPlayerScore singelPlayerScore, @DestinationVariable String
           roomName) {
-    player.setName(user.getName());
-    webAgentSessionRegistry.updateRoomScoreByPlayer(player, roomName);
-    return webAgentSessionRegistry.getPlayersByRoomID(roomName);
+    System.out.println(user.getName());
+    singelPlayerScore.setPlayerName(user.getName());
+    webAgentSessionRegistry.updateRoomScoreByPlayer(singelPlayerScore, roomName);
+    return webAgentSessionRegistry.getSingleGameRecord(roomName);
   }
 
 }
