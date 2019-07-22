@@ -14,7 +14,7 @@ public class SingleGameRecord {
 
 
     public void update(SingelPlayerScore singelPlayerScore) {
-        if (!player2Score.containsKey(singelPlayerScore.getPlayerName())) {
+        if (!singelPlayerScore.getPlayerName().isEmpty() && !player2Score.containsKey(singelPlayerScore.getPlayerName())) {
             player2Score.put(singelPlayerScore.getPlayerName(), singelPlayerScore);
         } else {
             SingelPlayerScore store = player2Score.get(singelPlayerScore.getPlayerName());
@@ -23,15 +23,16 @@ public class SingleGameRecord {
         }
     }
 
-    public void removeScoreRecord(String exitUserId) {
-        player2Score.remove(exitUserId);
-    }
-
     @Data
     public static class SingelPlayerScore {
         private String fibonacciNum = "??";
         private boolean clicked = false;
         private String playerName;
+        private String roomName;
+    }
+
+    public void removeScoreRecord(String exitUserId) {
+        player2Score.remove(exitUserId);
     }
 
     public SingelPlayerScore GetScore(String playerName) {
@@ -41,8 +42,11 @@ public class SingleGameRecord {
         return player2Score.get(playerName);
     }
 
-    public void addScoreRecord(String palyerName) {
-        player2Score.put(palyerName, new SingelPlayerScore());
+    public void addScoreRecord(String playerName, String roomName) {
+        SingelPlayerScore score = new SingelPlayerScore();
+        score.setPlayerName(playerName);
+        score.setRoomName(roomName);
+        player2Score.put(playerName, score);
     }
 
 }

@@ -81,6 +81,7 @@ public class SocketSessionRegistry {
     SingleGameRecord record = roomId2Room.get(roomID).getGameRecord();
     GameDTO dto = new GameDTO();
     dto.setPlayerScoreList(Lists.newArrayList(record.getPlayer2Score().values()));
+    dto.setRoomName(roomID);
     return dto;
   }
 
@@ -120,12 +121,12 @@ public class SocketSessionRegistry {
     roomId2Room.put(room.getName(), room);
   }
 
-  public void updateRoomScoreByPlayer(SingleGameRecord.SingelPlayerScore singelPlayerScore, String roomName) {
+  public void updateRoomScoreByPlayer(SingleGameRecord.SingelPlayerScore singlePlayerScore, String roomName) {
     Room room = roomId2Room.get(roomName);
     List<Player> players = room.getPlayer();
     for (Player p : players) {
-      if (p.getName().equals(singelPlayerScore.getPlayerName())) {
-        room.getGameRecord().update(singelPlayerScore);
+      if (p.getName().equals(singlePlayerScore.getPlayerName())) {
+        room.getGameRecord().update(singlePlayerScore);
       }
     }
   }

@@ -8,5 +8,5 @@ import java.util.List;
 @Data
 public class GameDTO {
     private List<SingleGameRecord.SingelPlayerScore> playerScoreList;
-
+    private String roomName;
 }

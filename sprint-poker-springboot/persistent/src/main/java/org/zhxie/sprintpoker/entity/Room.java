@@ -77,7 +77,7 @@ public class Room {
 
     public void add(Player player) {
         players.add(player);
-        gameRecord.addScoreRecord(player.getName());
+        gameRecord.addScoreRecord(player.getName(), name);
     }
 
     public void removePlayer(String exitUserId) {
