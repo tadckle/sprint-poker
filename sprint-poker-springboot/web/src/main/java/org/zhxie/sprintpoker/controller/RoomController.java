@@ -55,4 +55,12 @@ public class RoomController {
     return webAgentSessionRegistry.getSingleGameRecord(roomName);
   }
 
+  @MessageMapping("/onNextGame/{roomName}")
+  @SendTo("/pocker/pockerBoard/{roomName}")
+  public GameDTO onNextGame(Principal user, @DestinationVariable String
+          roomName) {
+    webAgentSessionRegistry.onNextGame(user.getName(), roomName);
+    return webAgentSessionRegistry.getSingleGameRecord(roomName);
+  }
+
 }

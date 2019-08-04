@@ -158,4 +158,11 @@ public class SocketSessionRegistry {
       return updateRooms;
     }
   }
+
+  public void onNextGame(String roomOwner, String roomName) {
+    Room room = roomId2Room.get(roomName);
+    if (room != null) {
+      room.nextGame();
+    }
+  }
 }

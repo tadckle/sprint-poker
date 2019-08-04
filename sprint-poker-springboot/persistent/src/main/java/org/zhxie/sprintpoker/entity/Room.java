@@ -88,4 +88,11 @@ public class Room {
     public boolean isEmpty() {
         return players.isEmpty();
     }
+
+    public void nextGame() {
+        gameRecord = new SingleGameRecord();
+        for (Player p : players) {
+            gameRecord.addScoreRecord(p.getName(), name);
+        }
+    }
 }
