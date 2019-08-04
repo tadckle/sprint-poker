@@ -8,5 +8,6 @@ import java.util.List;
 @Data
 public class GameDTO {
     private List<SingleGameRecord.SingelPlayerScore> playerScoreList;
+    private boolean shown;
     private String roomName;
 }

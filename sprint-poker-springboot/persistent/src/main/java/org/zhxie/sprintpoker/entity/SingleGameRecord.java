@@ -12,7 +12,6 @@ public class SingleGameRecord {
     private String roomNum;
     private Map<String, SingelPlayerScore> player2Score = Maps.newHashMap();
 
-
     public void update(SingelPlayerScore singelPlayerScore) {
         if (!singelPlayerScore.getPlayerName().isEmpty() && !player2Score.containsKey(singelPlayerScore.getPlayerName())) {
             player2Score.put(singelPlayerScore.getPlayerName(), singelPlayerScore);
@@ -29,6 +28,7 @@ public class SingleGameRecord {
         private boolean clicked = false;
         private String playerName;
         private String roomName;
+        private boolean shown;
     }
 
     public void removeScoreRecord(String exitUserId) {
@@ -47,6 +47,16 @@ public class SingleGameRecord {
         score.setPlayerName(playerName);
         score.setRoomName(roomName);
         player2Score.put(playerName, score);
+    }
+
+    public boolean isAllPlayerClicked() {
+        boolean re = true;
+        for (SingelPlayerScore p: player2Score.values()) {
+            if (!p.isClicked()) {
+                re = false;
+            }
+        }
+        return re;
     }
 
 }

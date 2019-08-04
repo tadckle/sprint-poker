@@ -14,6 +14,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.stream.Collectors;
 
 public class SocketSessionRegistry {
 
@@ -80,8 +81,13 @@ public class SocketSessionRegistry {
   public GameDTO getSingleGameRecord(String roomID) {
     SingleGameRecord record = roomId2Room.get(roomID).getGameRecord();
     GameDTO dto = new GameDTO();
-    dto.setPlayerScoreList(Lists.newArrayList(record.getPlayer2Score().values()));
+    boolean shown = record.isAllPlayerClicked();
+    dto.setPlayerScoreList(Lists.newArrayList(record.getPlayer2Score().values().stream().map(p -> {
+      p.setShown(shown);
+      return p;
+    }).collect(Collectors.toList())));
     dto.setRoomName(roomID);
+    dto.setShown(shown);
     return dto;
   }
 
