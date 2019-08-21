@@ -82,7 +82,7 @@ public class SocketSessionRegistry {
     SingleGameRecord record = roomId2Room.get(roomID).getGameRecord();
     GameDTO dto = new GameDTO();
     boolean shown = record.isAllPlayerClicked();
-    dto.setPlayerScoreList(Lists.newArrayList(record.getPlayer2Score().values().stream().map(p -> {
+    dto.setPlayerScoreList((record.getPlayer2Score().values().stream().map(p -> {
       p.setShown(shown);
       return p;
     }).collect(Collectors.toList())));
