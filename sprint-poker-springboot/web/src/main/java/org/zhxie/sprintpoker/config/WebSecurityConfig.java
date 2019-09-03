@@ -80,7 +80,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // enable the cookie transfer from different port
     http.csrf().disable();
 
-    // 用来给浏览器指示允许一个页面可否在 <frame>, <iframe> 或者 <object> 中展现的标记
+    http.cors().disable();
+
+  // 用来给浏览器指示允许一个页面可否在 <frame>, <iframe> 或者 <object> 中展现的标记
     http.headers().frameOptions().sameOrigin();
   }
 
