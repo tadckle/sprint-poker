@@ -3,6 +3,7 @@ package org.zhxie.sprintpoker.entity;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.Data;
+import org.zhxie.sprintpoker.entity.game.SingleGameRecord;
 
 import java.util.List;
 import java.util.Set;

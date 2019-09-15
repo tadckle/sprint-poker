@@ -6,7 +6,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.zhxie.sprintpoker.entity.Room;
-import org.zhxie.sprintpoker.entity.SingleGameRecord;
+import org.zhxie.sprintpoker.entity.game.SingleGameRecord;
 import org.zhxie.sprintpoker.entity.dto.GameDTO;
 import org.zhxie.sprintpoker.exception.CommandException;
 import org.zhxie.sprintpoker.repository.SocketSessionRegistry;
@@ -60,7 +60,9 @@ public class RoomController {
   public GameDTO onNextGame(Principal user, @DestinationVariable String
           roomName) {
     webAgentSessionRegistry.onNextGame(user.getName(), roomName);
-    return webAgentSessionRegistry.getSingleGameRecord(roomName);
+    final GameDTO singleGameRecord = webAgentSessionRegistry.getSingleGameRecord(roomName);
+    singleGameRecord.setReset(true);
+    return singleGameRecord;
   }
 
 }

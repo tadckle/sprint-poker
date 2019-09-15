@@ -1,4 +1,4 @@
-package org.zhxie.sprintpoker.entity;
+package org.zhxie.sprintpoker.entity.game;
 
 import com.google.common.collect.Maps;
 import lombok.Data;
