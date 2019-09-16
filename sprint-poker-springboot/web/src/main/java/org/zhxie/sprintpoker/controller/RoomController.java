@@ -33,34 +33,33 @@ public class RoomController {
     return webAgentSessionRegistry.getRooms();
   }
 
-  @MessageMapping("/joinPockerBoard/{roomName}")
+  @MessageMapping("/joinPockerBoard/{roomName}/{curPage}")
   @SendTo("/pocker/pockerBoard/{roomName}")
-  public GameDTO joinPockerBoardByRoomId(Principal user, @DestinationVariable String roomName) throws
+  public GameDTO joinPockerBoardByRoomId(Principal user, @DestinationVariable String roomName, @DestinationVariable Integer curPage) throws
           CommandException {
     //TODO: join the room and remember websocket session id
     System.out.println(user.getName());
     if (!webAgentSessionRegistry.isInRoom(roomName, user.getName())) {
       webAgentSessionRegistry.joinRoom(roomName, user.getName());
     }
-    return webAgentSessionRegistry.getSingleGameRecord(roomName);
+    return webAgentSessionRegistry.getSingleGameRecord(roomName, curPage);
   }
 
-  @MessageMapping("/onClickPocker/{roomName}")
+  @MessageMapping("/onClickPocker/{roomName}/{curPage}")
   @SendTo("/pocker/pockerBoard/{roomName}")
   public GameDTO onClickPocker(Principal user, SingleGameRecord.SingelPlayerScore singelPlayerScore, @DestinationVariable String
-          roomName) {
+          roomName, @DestinationVariable Integer curPage) {
     System.out.println(user.getName());
     singelPlayerScore.setPlayerName(user.getName());
-    webAgentSessionRegistry.updateRoomScoreByPlayer(singelPlayerScore, roomName);
-    return webAgentSessionRegistry.getSingleGameRecord(roomName);
+    webAgentSessionRegistry.updateRoomScoreByPlayer(singelPlayerScore, roomName, curPage);
+    return webAgentSessionRegistry.getSingleGameRecord(roomName, curPage);
   }
 
-  @MessageMapping("/onNextGame/{roomName}")
+  @MessageMapping("/onNextGame/{roomName}/{curPage}")
   @SendTo("/pocker/pockerBoard/{roomName}")
-  public GameDTO onNextGame(Principal user, @DestinationVariable String
-          roomName) {
-    webAgentSessionRegistry.onNextGame(user.getName(), roomName);
-    final GameDTO singleGameRecord = webAgentSessionRegistry.getSingleGameRecord(roomName);
+  public GameDTO onNextGame(Principal user, @DestinationVariable String roomName, @DestinationVariable Integer curPage) {
+    webAgentSessionRegistry.onNextGame(user.getName(), roomName, curPage);
+    final GameDTO singleGameRecord = webAgentSessionRegistry.getSingleGameRecord(roomName, curPage);
     singleGameRecord.setReset(true);
     return singleGameRecord;
   }

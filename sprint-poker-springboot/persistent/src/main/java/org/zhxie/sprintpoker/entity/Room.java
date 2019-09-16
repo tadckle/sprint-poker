@@ -3,6 +3,7 @@ package org.zhxie.sprintpoker.entity;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.Data;
+import org.zhxie.sprintpoker.entity.game.RoomGameRecord;
 import org.zhxie.sprintpoker.entity.game.SingleGameRecord;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class Room {
 
     private final Set<Player> players = Sets.newHashSet();
 
-    private SingleGameRecord gameRecord = new SingleGameRecord();
+    private RoomGameRecord gameRecord = new RoomGameRecord();
 
     public Room() {
 
@@ -83,17 +84,21 @@ public class Room {
 
     public void removePlayer(String exitUserId) {
         players.removeIf(p -> p.getName().equals(exitUserId));
-        gameRecord.removeScoreRecord(exitUserId);
+        gameRecord.removePlayer(exitUserId);
     }
 
     public boolean isEmpty() {
         return players.isEmpty();
     }
 
-    public void nextGame() {
-        gameRecord = new SingleGameRecord();
+    public void nextGame(int curPage) {
+        gameRecord.resetPage(curPage);
         for (Player p : players) {
-            gameRecord.addScoreRecord(p.getName(), name);
+            gameRecord.getCurPage(curPage).addScoreRecord(p.getName(), name);
         }
+    }
+
+    public SingleGameRecord getCurPageSingleGRecord(int curPage) {
+        return  gameRecord.getCurPage(curPage);
     }
 }
