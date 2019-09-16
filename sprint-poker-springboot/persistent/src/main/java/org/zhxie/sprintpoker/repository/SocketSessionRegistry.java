@@ -5,7 +5,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.zhxie.sprintpoker.entity.Player;
 import org.zhxie.sprintpoker.entity.Room;
-import org.zhxie.sprintpoker.entity.SingleGameRecord;
+import org.zhxie.sprintpoker.entity.game.RoomGameRecord;
+import org.zhxie.sprintpoker.entity.game.SingleGameRecord;
 import org.zhxie.sprintpoker.entity.dto.GameDTO;
 import org.zhxie.sprintpoker.exception.CommandException;
 import org.springframework.util.Assert;
@@ -78,8 +79,9 @@ public class SocketSessionRegistry {
     return roomId2Room.get(roomID).getPlayer();
   }
 
-  public GameDTO getSingleGameRecord(String roomID) {
-    SingleGameRecord record = roomId2Room.get(roomID).getGameRecord();
+  public GameDTO getSingleGameRecord(String roomID, Integer curPage) {
+    final RoomGameRecord gameRecord = roomId2Room.get(roomID).getGameRecord();
+    SingleGameRecord record = gameRecord.getCurPage(curPage);
     GameDTO dto = new GameDTO();
     boolean shown = record.isAllPlayerClicked();
     dto.setPlayerScoreList((record.getPlayer2Score().values().stream().map(p -> {
@@ -88,6 +90,8 @@ public class SocketSessionRegistry {
     }).collect(Collectors.toList())));
     dto.setRoomName(roomID);
     dto.setShown(shown);
+    dto.setCurNum(curPage);
+    dto.setTotalNum(gameRecord.getTotalGameRecord());
     return dto;
   }
 
@@ -127,12 +131,12 @@ public class SocketSessionRegistry {
     roomId2Room.put(room.getName(), room);
   }
 
-  public void updateRoomScoreByPlayer(SingleGameRecord.SingelPlayerScore singlePlayerScore, String roomName) {
+  public void updateRoomScoreByPlayer(SingleGameRecord.SingelPlayerScore singlePlayerScore, String roomName, int curPage) {
     Room room = roomId2Room.get(roomName);
     List<Player> players = room.getPlayer();
     for (Player p : players) {
       if (p.getName().equals(singlePlayerScore.getPlayerName())) {
-        room.getGameRecord().update(singlePlayerScore);
+        room.getGameRecord().getCurPage(curPage).update(singlePlayerScore);
       }
     }
   }
@@ -159,10 +163,10 @@ public class SocketSessionRegistry {
     }
   }
 
-  public void onNextGame(String roomOwner, String roomName) {
+  public void onNextGame(String roomOwner, String roomName, int curPage) {
     Room room = roomId2Room.get(roomName);
     if (room != null) {
-      room.nextGame();
+      room.nextGame(curPage);
     }
   }
 }
