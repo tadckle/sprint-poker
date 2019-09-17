@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class RoomGameRecord {
 
-  private List<SingleGameRecord> recordList = Lists.newArrayList();
+  private List<SingleGameRecord> recordList = Lists.newArrayList(new SingleGameRecord());
   private String roomName = "";
 
   public int getTotalGameRecord() {
@@ -20,10 +20,10 @@ public class RoomGameRecord {
   }
 
   public SingleGameRecord getCurPage(int selectedGameIndex) {
-    if (selectedGameIndex <0 || selectedGameIndex >= recordList.size()) {
+    if (selectedGameIndex <0 || selectedGameIndex > recordList.size()) {
       throw new UnsupportedOperationException("Error Index");
     }
-    return recordList.get(selectedGameIndex);
+    return recordList.get(selectedGameIndex - 1);
   }
 
 
@@ -33,8 +33,11 @@ public class RoomGameRecord {
     }
   }
 
-  public void resetPage(int selectPage) {
-    recordList.set(selectPage, new SingleGameRecord());
+  public void resetPage(int selectedGameIndex) {
+    if (selectedGameIndex <0 || selectedGameIndex > recordList.size()) {
+      throw new UnsupportedOperationException("Error Index");
+    }
+    recordList.set(selectedGameIndex - 1, new SingleGameRecord());
   }
 
   public void addScoreRecord(String playerName, String roomName) {
