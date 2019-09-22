@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.zhxie.sprintpoker.entity.Player;
 import org.zhxie.sprintpoker.entity.Room;
+import org.zhxie.sprintpoker.entity.dto.PagebleDTO;
 import org.zhxie.sprintpoker.entity.game.RoomGameRecord;
 import org.zhxie.sprintpoker.entity.game.SingleGameRecord;
 import org.zhxie.sprintpoker.entity.dto.GameDTO;
@@ -167,6 +168,13 @@ public class SocketSessionRegistry {
     Room room = roomId2Room.get(roomName);
     if (room != null) {
       room.nextGame(curPage);
+    }
+  }
+
+  public void onAddStory(PagebleDTO dto) {
+    Room room = roomId2Room.get(dto.getRoomName());
+    if (room != null) {
+      room.addStory();
     }
   }
 }

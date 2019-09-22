@@ -45,4 +45,8 @@ public class RoomGameRecord {
       record.addScoreRecord(playerName, roomName);
     }
   }
+
+  public void addStory() {
+    recordList.add(new SingleGameRecord());
+  }
 }
