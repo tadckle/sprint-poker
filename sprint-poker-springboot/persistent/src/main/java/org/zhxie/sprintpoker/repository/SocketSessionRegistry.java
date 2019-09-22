@@ -80,7 +80,7 @@ public class SocketSessionRegistry {
     return roomId2Room.get(roomID).getPlayer();
   }
 
-  public GameDTO getSingleGameRecord(String roomID, Integer curPage) {
+  public GameDTO getSingleGameRecord(String roomID, Integer curPage, String userName) {
     final RoomGameRecord gameRecord = roomId2Room.get(roomID).getGameRecord();
     SingleGameRecord record = gameRecord.getCurPage(curPage);
     GameDTO dto = new GameDTO();
@@ -93,6 +93,7 @@ public class SocketSessionRegistry {
     dto.setShown(shown);
     dto.setCurNum(curPage);
     dto.setTotalNum(gameRecord.getTotalGameRecord());
+    dto.setClickedNum(record.getScore(userName).getFibonacciNum());
     return dto;
   }
 

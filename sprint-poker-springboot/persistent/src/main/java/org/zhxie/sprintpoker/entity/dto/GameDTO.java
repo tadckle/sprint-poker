@@ -13,4 +13,5 @@ public class GameDTO {
     private boolean reset = false;
     private int curNum;
     private int totalNum;
+    private String clickedNum;
 }

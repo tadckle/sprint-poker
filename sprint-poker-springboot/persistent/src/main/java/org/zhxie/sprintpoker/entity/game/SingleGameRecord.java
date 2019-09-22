@@ -24,7 +24,7 @@ public class SingleGameRecord {
 
     @Data
     public static class SingelPlayerScore {
-        private String fibonacciNum = "??";
+        private String fibonacciNum = "?";
         private boolean clicked = false;
         private String playerName;
         private String roomName;
@@ -35,7 +35,7 @@ public class SingleGameRecord {
         player2Score.remove(exitUserId);
     }
 
-    public SingelPlayerScore GetScore(String playerName) {
+    public SingelPlayerScore getScore(String playerName) {
         if (!player2Score.containsKey(playerName)) {
             throw new UnsupportedOperationException("Cannot find the player");
         }

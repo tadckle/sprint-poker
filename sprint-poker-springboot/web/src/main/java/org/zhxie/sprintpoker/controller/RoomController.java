@@ -44,7 +44,7 @@ public class RoomController {
     if (!webAgentSessionRegistry.isInRoom(roomName, user.getName())) {
       webAgentSessionRegistry.joinRoom(roomName, user.getName());
     }
-    return webAgentSessionRegistry.getSingleGameRecord(roomName, curPage);
+    return webAgentSessionRegistry.getSingleGameRecord(roomName, curPage, user.getName());
   }
 
   @MessageMapping("/onClickPocker/{roomName}/{curPage}")
@@ -54,28 +54,28 @@ public class RoomController {
     System.out.println(user.getName());
     singelPlayerScore.setPlayerName(user.getName());
     webAgentSessionRegistry.updateRoomScoreByPlayer(singelPlayerScore, roomName, curPage);
-    return webAgentSessionRegistry.getSingleGameRecord(roomName, curPage);
+    return webAgentSessionRegistry.getSingleGameRecord(roomName, curPage, user.getName());
   }
 
   @MessageMapping("/onNextGame/{roomName}/{curPage}")
   @SendTo("/pocker/pockerBoard/{roomName}")
   public GameDTO onNextGame(Principal user, @DestinationVariable String roomName, @DestinationVariable Integer curPage) {
     webAgentSessionRegistry.onNextGame(user.getName(), roomName, curPage);
-    final GameDTO singleGameRecord = webAgentSessionRegistry.getSingleGameRecord(roomName, curPage);
+    final GameDTO singleGameRecord = webAgentSessionRegistry.getSingleGameRecord(roomName, curPage, user.getName());
     singleGameRecord.setReset(true);
     return singleGameRecord;
   }
 
   @MessageMapping("/onAddStory/{roomName}")
   @SendTo("/pocker/pockerBoard/{roomName}")
-  public GameDTO onAddStory(@RequestBody PageableDTO pagebleDTO) {
+  public GameDTO onAddStory(Principal user, @RequestBody PageableDTO pagebleDTO) {
     webAgentSessionRegistry.onAddStory(pagebleDTO);
-    return webAgentSessionRegistry.getSingleGameRecord(pagebleDTO.getRoomName(), pagebleDTO.getCurPage());
+    return webAgentSessionRegistry.getSingleGameRecord(pagebleDTO.getRoomName(), pagebleDTO.getCurPage(), user.getName());
   }
 
   @MessageMapping("/onNavigateToPage/{roomName}")
   @SendTo("/pocker/pockerBoard/{roomName}")
-  public GameDTO onNavigateToPage(@RequestBody PageableDTO pagebleDTO) {
-    return webAgentSessionRegistry.getSingleGameRecord(pagebleDTO.getRoomName(), pagebleDTO.getCurPage());
+  public GameDTO onNavigateToPage(Principal user, @RequestBody PageableDTO pagebleDTO) {
+    return webAgentSessionRegistry.getSingleGameRecord(pagebleDTO.getRoomName(), pagebleDTO.getCurPage(), user.getName());
   }
 }
