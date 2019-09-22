@@ -28,18 +28,6 @@ public class Room {
 
     }
 
-    public Room(String roomNum, String ownerName) {
-        super();
-        this.roomNum = roomNum;
-        this.owner = ownerName;
-    }
-
-    public Room(String roomNum, String creator, String name, String desc) {
-        this(roomNum, creator);
-        this.name = name;
-        this.desc = desc;
-    }
-
     public String getRoomNum() {
         return roomNum;
     }
@@ -103,6 +91,6 @@ public class Room {
     }
 
     public void addStory() {
-        gameRecord.addStory();
+        gameRecord.addStory(players, name);
     }
 }

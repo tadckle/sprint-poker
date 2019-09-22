@@ -3,7 +3,7 @@ package org.zhxie.sprintpoker.entity.dto;
 import lombok.Data;
 
 @Data
-public class PagebleDTO {
+public class PageableDTO {
     private int curPage;
     private int totalPage;
     private String roomName;

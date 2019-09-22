@@ -2,14 +2,15 @@ package org.zhxie.sprintpoker.entity.game;
 
 import com.google.common.collect.Lists;
 import lombok.Data;
+import org.zhxie.sprintpoker.entity.Player;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 public class RoomGameRecord {
 
   private List<SingleGameRecord> recordList = Lists.newArrayList(new SingleGameRecord());
-  private String roomName = "";
 
   public int getTotalGameRecord() {
     return recordList.size();
@@ -20,7 +21,7 @@ public class RoomGameRecord {
   }
 
   public SingleGameRecord getCurPage(int selectedGameIndex) {
-    if (selectedGameIndex <0 || selectedGameIndex > recordList.size()) {
+    if (selectedGameIndex <=0 || selectedGameIndex > recordList.size()) {
       throw new UnsupportedOperationException("Error Index");
     }
     return recordList.get(selectedGameIndex - 1);
@@ -46,7 +47,11 @@ public class RoomGameRecord {
     }
   }
 
-  public void addStory() {
-    recordList.add(new SingleGameRecord());
+  public void addStory(Set<Player> players, String roomName) {
+    SingleGameRecord newOne =  new SingleGameRecord();
+    for (Player p : players) {
+      newOne.addScoreRecord(p.getName(), roomName);
+    }
+    recordList.add(newOne);
   }
 }

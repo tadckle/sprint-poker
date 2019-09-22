@@ -7,7 +7,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.zhxie.sprintpoker.entity.Room;
-import org.zhxie.sprintpoker.entity.dto.PagebleDTO;
+import org.zhxie.sprintpoker.entity.dto.PageableDTO;
 import org.zhxie.sprintpoker.entity.game.SingleGameRecord;
 import org.zhxie.sprintpoker.entity.dto.GameDTO;
 import org.zhxie.sprintpoker.exception.CommandException;
@@ -68,8 +68,14 @@ public class RoomController {
 
   @MessageMapping("/onAddStory/{roomName}")
   @SendTo("/pocker/pockerBoard/{roomName}")
-  public GameDTO onAddStory(@RequestBody PagebleDTO pagebleDTO) {
+  public GameDTO onAddStory(@RequestBody PageableDTO pagebleDTO) {
     webAgentSessionRegistry.onAddStory(pagebleDTO);
+    return webAgentSessionRegistry.getSingleGameRecord(pagebleDTO.getRoomName(), pagebleDTO.getCurPage());
+  }
+
+  @MessageMapping("/onNavigateToPage/{roomName}")
+  @SendTo("/pocker/pockerBoard/{roomName}")
+  public GameDTO onNavigateToPage(@RequestBody PageableDTO pagebleDTO) {
     return webAgentSessionRegistry.getSingleGameRecord(pagebleDTO.getRoomName(), pagebleDTO.getCurPage());
   }
 }
