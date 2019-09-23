@@ -14,4 +14,5 @@ public class GameDTO {
     private int curNum;
     private int totalNum;
     private String clickedNum;
+    private String featureName;
 }

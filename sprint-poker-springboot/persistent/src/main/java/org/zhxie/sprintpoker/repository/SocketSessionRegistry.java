@@ -94,6 +94,7 @@ public class SocketSessionRegistry {
     dto.setCurNum(curPage);
     dto.setTotalNum(gameRecord.getTotalGameRecord());
     dto.setClickedNum(record.getScore(userName).getFibonacciNum());
+    dto.setFeatureName(record.getName());
     return dto;
   }
 
@@ -130,6 +131,7 @@ public class SocketSessionRegistry {
 
   public void createRoom(Room room) {
     room.setRoomNum(String.valueOf(roomId2Room.size()));
+    room.getGameRecord().getCurPage(1).setName(room.getDesc());
     roomId2Room.put(room.getName(), room);
   }
 
