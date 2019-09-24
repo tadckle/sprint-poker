@@ -177,7 +177,7 @@ public class SocketSessionRegistry {
   public void onAddStory(PageableDTO dto) {
     Room room = roomId2Room.get(dto.getRoomName());
     if (room != null) {
-      room.addStory();
+      room.addStory(dto);
     }
   }
 }

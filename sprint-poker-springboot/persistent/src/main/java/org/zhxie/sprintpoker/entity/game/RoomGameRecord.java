@@ -3,6 +3,7 @@ package org.zhxie.sprintpoker.entity.game;
 import com.google.common.collect.Lists;
 import lombok.Data;
 import org.zhxie.sprintpoker.entity.Player;
+import org.zhxie.sprintpoker.entity.dto.PageableDTO;
 
 import java.util.List;
 import java.util.Set;
@@ -47,11 +48,12 @@ public class RoomGameRecord {
     }
   }
 
-  public void addStory(Set<Player> players, String roomName) {
+  public void addStory(Set<Player> players, String roomName, PageableDTO dto) {
     SingleGameRecord newOne =  new SingleGameRecord();
     for (Player p : players) {
       newOne.addScoreRecord(p.getName(), roomName);
     }
+    newOne.setName(dto.getTitle());
     recordList.add(newOne);
   }
 }

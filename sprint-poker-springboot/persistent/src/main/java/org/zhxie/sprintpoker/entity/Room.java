@@ -3,6 +3,7 @@ package org.zhxie.sprintpoker.entity;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.Data;
+import org.zhxie.sprintpoker.entity.dto.PageableDTO;
 import org.zhxie.sprintpoker.entity.game.RoomGameRecord;
 import org.zhxie.sprintpoker.entity.game.SingleGameRecord;
 
@@ -90,7 +91,7 @@ public class Room {
         return  gameRecord.getCurPage(curPage);
     }
 
-    public void addStory() {
-        gameRecord.addStory(players, name);
+    public void addStory(PageableDTO dto) {
+        gameRecord.addStory(players, name, dto);
     }
 }
