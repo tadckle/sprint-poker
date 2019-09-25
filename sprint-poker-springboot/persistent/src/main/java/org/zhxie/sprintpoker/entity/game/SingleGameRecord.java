@@ -8,8 +8,9 @@ import java.util.Map;
 
 @Data
 public class SingleGameRecord {
-    private String name;
+    private String featureName;
     private String roomNum;
+    private String internalTaskTitle;
     private Map<String, SingelPlayerScore> player2Score = Maps.newHashMap();
 
     public void update(SingelPlayerScore singelPlayerScore) {

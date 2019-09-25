@@ -8,7 +8,8 @@ public class PageableDTO {
     private int totalPage;
     private String roomName;
     /**
-     * Ticket or internal task title
+     * The Feature name
      */
     private String title;
+    private String taskTitle;
 }
