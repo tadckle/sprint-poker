@@ -14,8 +14,11 @@ public class TicketRecord implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String ticketNum;
     private String title;
+    /**
+     * belong to which feature
+     */
+    private String feature;
     /**
      * 不能用desc， 它是保留关键字
      */
@@ -23,9 +26,6 @@ public class TicketRecord implements Serializable {
     private Double storyPoint;
     private String creator;
 
-    @CreatedDate
-    private Long createTime;
-    @LastModifiedDate
-    private Long updateTime;
+    private String updateTime;
 
 }

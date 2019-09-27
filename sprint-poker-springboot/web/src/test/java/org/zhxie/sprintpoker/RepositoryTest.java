@@ -18,7 +18,7 @@ public class RepositoryTest {
     @Test
     public void testSave(){
         TicketRecord ticketRecord = new TicketRecord();
-        ticketRecord.setTicketNum("DOM-123");
+        ticketRecord.setFeature("DOM-123");
         ticketRecord.setDescription("DOM-123:description");
         ticketRecord.setStoryPoint(3.0);
         ticketRecord.setCreator("jianyang,jason,xianchen,da-long,yangliu");

@@ -26,17 +26,17 @@ public class TicketRecordRepositoryTest {
     public void setUp() throws Exception {
         ticketRecordRepository.deleteAll();
         TicketRecord ticketRecord = new TicketRecord();
-        ticketRecord.setTicketNum("101");
+        ticketRecord.setFeature("101");
         ticketRecord.setCreator("zhxie");
         ticketRecord.setStoryPoint(1.2);
 
         TicketRecord ticketRecord2 = new TicketRecord();
-        ticketRecord2.setTicketNum("102");
+        ticketRecord2.setFeature("102");
         ticketRecord2.setCreator("zhxie");
         ticketRecord2.setStoryPoint(1.2);
 
         TicketRecord ticketRecord3 = new TicketRecord();
-        ticketRecord3.setTicketNum("103");
+        ticketRecord3.setFeature("103");
         ticketRecord3.setCreator("zhxie");
         ticketRecord3.setStoryPoint(1.2);
 
@@ -52,7 +52,7 @@ public class TicketRecordRepositoryTest {
         Sort sort = new Sort(Sort.Direction.ASC, "id");
         Pageable pageable = PageRequest.of(pageOffSet -1, pageLimit,sort);
         final Page<TicketRecord> all = ticketRecordRepository.findAll(pageable);
-        assertTrue(all.getContent().get(0).getTicketNum().equalsIgnoreCase("103"));
+        assertTrue(all.getContent().get(0).getFeature().equalsIgnoreCase("103"));
         assertEquals(all.getContent().get(0).getCreator(), "zhxie");
     }
 

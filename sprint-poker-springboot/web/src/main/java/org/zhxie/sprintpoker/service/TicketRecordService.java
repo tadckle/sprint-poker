@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.zhxie.sprintpoker.entity.TicketRecord;
 import org.zhxie.sprintpoker.repository.TicketRecordRepository;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +27,11 @@ public class TicketRecordService {
     }
 
     public TicketRecord save(TicketRecord ticketRecord) {
+        Date date = new Date();
+        System.out.println(date);
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+        String dateNowStr = sdf1.format(date);
+        ticketRecord.setUpdateTime(dateNowStr);
         return ticketRecordRepository.save(ticketRecord);
     }
 
