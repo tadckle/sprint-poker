@@ -53,7 +53,8 @@ public class RoomGameRecord {
     for (Player p : players) {
       newOne.addScoreRecord(p.getName(), roomName);
     }
-    newOne.setName(dto.getTitle());
+    newOne.setFeatureName(dto.getTitle());
+    newOne.setInternalTaskTitle(dto.getTaskTitle());
     recordList.add(newOne);
   }
 }

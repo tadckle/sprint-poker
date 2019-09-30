@@ -15,4 +15,5 @@ public class GameDTO {
     private int totalNum;
     private String clickedNum;
     private String featureName;
+    private String internalTaskName;
 }
