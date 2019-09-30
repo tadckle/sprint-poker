@@ -23,7 +23,7 @@ public class RoomGameRecord {
 
   public SingleGameRecord getCurPage(int selectedGameIndex) {
     if (selectedGameIndex <=0 || selectedGameIndex > recordList.size()) {
-      throw new UnsupportedOperationException("Error Index");
+      throw new UnsupportedOperationException("Error Index:" + selectedGameIndex);
     }
     return recordList.get(selectedGameIndex - 1);
   }
@@ -39,7 +39,13 @@ public class RoomGameRecord {
     if (selectedGameIndex <0 || selectedGameIndex > recordList.size()) {
       throw new UnsupportedOperationException("Error Index");
     }
-    recordList.set(selectedGameIndex - 1, new SingleGameRecord());
+    SingleGameRecord newOne = new SingleGameRecord();
+    SingleGameRecord former = recordList.set(selectedGameIndex - 1, newOne);
+    if (former != null) {
+      newOne.setFeatureName(former.getFeatureName());
+      newOne.setInternalTaskTitle(former.getInternalTaskTitle());
+      newOne.setRoomNum(former.getRoomNum());
+    }
   }
 
   public void addScoreRecord(String playerName, String roomName) {

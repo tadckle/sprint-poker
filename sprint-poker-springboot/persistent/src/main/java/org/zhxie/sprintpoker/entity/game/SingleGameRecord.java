@@ -10,7 +10,7 @@ import java.util.Map;
 public class SingleGameRecord {
     private String featureName;
     private String roomNum;
-    private String internalTaskTitle;
+    private String internalTaskTitle = "";
     private Map<String, SingelPlayerScore> player2Score = Maps.newHashMap();
 
     public void update(SingelPlayerScore singelPlayerScore) {
