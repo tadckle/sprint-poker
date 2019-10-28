@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[6],{RXBc:function(e,t,o){"use strict";var a=o("TqRt");Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var n=a(o("q1tI")),u=a(o("dPBl"));function d(){return n.default.createElement(u.default,{to:"/rooms"})}var r=d;t.default=r}}]);
