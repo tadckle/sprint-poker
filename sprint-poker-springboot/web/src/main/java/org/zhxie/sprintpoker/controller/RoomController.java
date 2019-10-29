@@ -16,6 +16,8 @@ import org.zhxie.sprintpoker.entity.dto.GameDTO;
 import org.zhxie.sprintpoker.exception.CommandException;
 import org.zhxie.sprintpoker.repository.SocketSessionRegistry;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -41,9 +43,12 @@ public class RoomController {
 
   @ResponseBody
   @PostMapping("/api/rooms/{roomName}")
-  public ResponseResult checkRoomPassword(@RequestBody Room room) {
+  public ResponseResult checkRoomPassword(@RequestBody Room room, HttpServletResponse response) {
     Optional<Room> findRoom = webAgentSessionRegistry.getRooms().stream().filter(roomItem -> (room.getName().equals(roomItem.getName()) && (room.getRoomPassword().equals(roomItem.getRoomPassword())))).findAny();
       if(findRoom.isPresent()) {
+        String cookieKey = "roomPassWord_".concat(room.getName());
+        String cookieValue = room.getRoomPassword();
+        response.addCookie(new Cookie(cookieKey, cookieValue));
         return new ResponseResult(ResponseResult.SUCCESS, "房间密码正确");
       } else {
         return new ResponseResult(ResponseResult.FAIL, "房间密码不正确！");
