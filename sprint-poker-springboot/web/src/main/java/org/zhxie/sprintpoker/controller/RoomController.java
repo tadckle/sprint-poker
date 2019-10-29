@@ -46,9 +46,11 @@ public class RoomController {
   public ResponseResult checkRoomPassword(@RequestBody Room room, HttpServletResponse response) {
     Optional<Room> findRoom = webAgentSessionRegistry.getRooms().stream().filter(roomItem -> (room.getName().equals(roomItem.getName()) && (room.getRoomPassword().equals(roomItem.getRoomPassword())))).findAny();
       if(findRoom.isPresent()) {
-        String cookieKey = "roomPassWord_".concat(room.getName());
+        String cookieKey = "roomPassword_".concat(room.getName());
         String cookieValue = room.getRoomPassword();
-        response.addCookie(new Cookie(cookieKey, cookieValue));
+        Cookie passwordCookie = new Cookie(cookieKey, cookieValue);
+        passwordCookie.setPath("/");
+        response.addCookie(passwordCookie);
         return new ResponseResult(ResponseResult.SUCCESS, "房间密码正确");
       } else {
         return new ResponseResult(ResponseResult.FAIL, "房间密码不正确！");
