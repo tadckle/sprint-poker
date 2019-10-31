@@ -5,16 +5,22 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.zhxie.sprintpoker.entity.Room;
 import org.zhxie.sprintpoker.entity.dto.PageableDTO;
+import org.zhxie.sprintpoker.entity.dto.ResponseResult;
 import org.zhxie.sprintpoker.entity.game.SingleGameRecord;
 import org.zhxie.sprintpoker.entity.dto.GameDTO;
 import org.zhxie.sprintpoker.exception.CommandException;
 import org.zhxie.sprintpoker.repository.SocketSessionRegistry;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class RoomController {
@@ -33,6 +39,22 @@ public class RoomController {
   public List<Room> addRoom(Room room) {
     webAgentSessionRegistry.createRoom(room);
     return webAgentSessionRegistry.getRooms();
+  }
+
+  @ResponseBody
+  @PostMapping("/api/rooms/{roomName}")
+  public ResponseResult checkRoomPassword(@RequestBody Room room, HttpServletResponse response) {
+    Optional<Room> findRoom = webAgentSessionRegistry.getRooms().stream().filter(roomItem -> (room.getName().equals(roomItem.getName()) && (room.getRoomPassword().equals(roomItem.getRoomPassword())))).findAny();
+      if(findRoom.isPresent()) {
+        String cookieKey = "roomPassword_".concat(room.getName());
+        String cookieValue = room.getRoomPassword();
+        Cookie passwordCookie = new Cookie(cookieKey, cookieValue);
+        passwordCookie.setPath("/");
+        response.addCookie(passwordCookie);
+        return new ResponseResult(ResponseResult.SUCCESS, "房间密码正确");
+      } else {
+        return new ResponseResult(ResponseResult.FAIL, "房间密码不正确！");
+      }
   }
 
   @MessageMapping("/joinPockerBoard/{roomName}/{curPage}")

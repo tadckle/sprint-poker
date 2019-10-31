@@ -15,6 +15,8 @@ public class Room {
 
     private String roomNum;
 
+    private String roomPassword;
+
     private String owner;
 
     private String name;
