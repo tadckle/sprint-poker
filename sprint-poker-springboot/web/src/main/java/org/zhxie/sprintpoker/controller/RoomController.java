@@ -49,7 +49,7 @@ public class RoomController {
         String cookieKey = "roomPassword_".concat(room.getName());
         String cookieValue = room.getRoomPassword();
         Cookie passwordCookie = new Cookie(cookieKey, cookieValue);
-        passwordCookie.setPath("/");
+        passwordCookie.setPath("/pockerRoom");
         response.addCookie(passwordCookie);
         return new ResponseResult(ResponseResult.SUCCESS, "房间密码正确");
       } else {
