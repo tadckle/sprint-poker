@@ -31,7 +31,7 @@ public class CheckRoomPasswordIntercepter extends HandlerInterceptorAdapter {
         boolean hasToken = false;
         if (roomToken != null && roomToken.length == 1) {
             Claims claims = JwtUtil.parseJWT(roomToken[0]);
-            hasToken = "roomPassword".equals(claims.getSubject());
+            hasToken = claims != null && "roomPassword".equals(claims.getSubject());
         }
         String roomName = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
         String cookieKey = "roomPassword_".concat(roomName);
