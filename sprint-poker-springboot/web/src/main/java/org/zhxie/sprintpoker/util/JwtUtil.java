@@ -13,11 +13,11 @@ import java.util.Date;
  * Created by jianyang on 2019/1/9.
  */
 
-@ConfigurationProperties("jwt.config")
+//@ConfigurationProperties("jwt.config")
 @Component
 public class JwtUtil {
-    private static String  key; //密钥
-    private static long ttl;   //过期时间
+    private static String  key = "1234"; //密钥
+    private static long ttl = 1000 * 60 * 60 * 24;   //过期时间 1day
 
     public String getKey() {
         return key;

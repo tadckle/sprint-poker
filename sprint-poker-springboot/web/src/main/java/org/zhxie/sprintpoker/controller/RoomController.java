@@ -16,6 +16,7 @@ import org.zhxie.sprintpoker.entity.game.SingleGameRecord;
 import org.zhxie.sprintpoker.entity.dto.GameDTO;
 import org.zhxie.sprintpoker.exception.CommandException;
 import org.zhxie.sprintpoker.repository.SocketSessionRegistry;
+import org.zhxie.sprintpoker.util.JwtUtil;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -68,10 +69,7 @@ public class RoomController {
   public ResponseResult generateRoomPasswordToken(@RequestBody Room room, HttpServletRequest request) {
     Optional<Room> findRoom = webAgentSessionRegistry.getRooms().stream().filter(roomItem -> (room.getName().equals(roomItem.getName()))).findAny();
     if(findRoom.isPresent()) {
-      String roomPassword = findRoom.get().getRoomPassword();
-      String token = encoder.encode(roomPassword);
-      String url = request.getRequestURL().toString();
-      String k = request.getRequestURI();
+      String token = JwtUtil.createJWT(room.getName(), "roomPassword", "");
       String link = request.getScheme().concat("://"+request.getServerName()+ ":"+request.getServerPort()).concat("/pockerRoom/").concat(room.getName()).concat("?roomToken=").concat(token);
       ResponseResult responseResult = new ResponseResult(ResponseResult.SUCCESS, "生成token 正确");
       responseResult.getData().put("link", link);
