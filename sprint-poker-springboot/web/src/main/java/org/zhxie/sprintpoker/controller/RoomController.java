@@ -65,7 +65,7 @@ public class RoomController {
   }
 
   @ResponseBody
-  @PostMapping("/api/roomToken/{roomName}")
+  @PostMapping("/api/room/token/{roomName}")
   public ResponseResult generateRoomPasswordToken(@RequestBody Room room, HttpServletRequest request) {
     Optional<Room> findRoom = webAgentSessionRegistry.getRooms().stream().filter(roomItem -> (room.getName().equals(roomItem.getName()))).findAny();
     if(findRoom.isPresent()) {

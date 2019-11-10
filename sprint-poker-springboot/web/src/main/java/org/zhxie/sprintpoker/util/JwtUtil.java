@@ -16,7 +16,7 @@ import java.util.Date;
 //@ConfigurationProperties("jwt.config")
 @Component
 public class JwtUtil {
-    private static String  key = "1234"; //密钥
+    private static String  key = "asml.brion.1234"; //密钥
     private static long ttl = 1000 * 60 * 60 * 24;   //过期时间 1day
 
     public String getKey() {
