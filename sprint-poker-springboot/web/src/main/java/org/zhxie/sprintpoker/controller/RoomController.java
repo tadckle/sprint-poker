@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,9 +16,12 @@ import org.zhxie.sprintpoker.entity.game.SingleGameRecord;
 import org.zhxie.sprintpoker.entity.dto.GameDTO;
 import org.zhxie.sprintpoker.exception.CommandException;
 import org.zhxie.sprintpoker.repository.SocketSessionRegistry;
+import org.zhxie.sprintpoker.util.JwtUtil;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.MalformedParameterizedTypeException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +31,9 @@ public class RoomController {
 
   @Autowired
   SocketSessionRegistry webAgentSessionRegistry;
+
+  @Autowired
+  private BCryptPasswordEncoder encoder;
 
   @MessageMapping("/rooms")
   @SendTo("/pocker/rooms")
@@ -49,12 +56,27 @@ public class RoomController {
         String cookieKey = "roomPassword_".concat(room.getName());
         String cookieValue = room.getRoomPassword();
         Cookie passwordCookie = new Cookie(cookieKey, cookieValue);
-        passwordCookie.setPath("/");
+        passwordCookie.setPath("/pockerRoom");
         response.addCookie(passwordCookie);
         return new ResponseResult(ResponseResult.SUCCESS, "房间密码正确");
       } else {
         return new ResponseResult(ResponseResult.FAIL, "房间密码不正确！");
       }
+  }
+
+  @ResponseBody
+  @PostMapping("/api/room/token/{roomName}")
+  public ResponseResult generateRoomPasswordToken(@RequestBody Room room, HttpServletRequest request) {
+    Optional<Room> findRoom = webAgentSessionRegistry.getRooms().stream().filter(roomItem -> (room.getName().equals(roomItem.getName()))).findAny();
+    if(findRoom.isPresent()) {
+      String token = JwtUtil.createJWT(room.getName(), "roomPassword", "");
+      String link = request.getScheme().concat("://"+request.getServerName()+ ":"+request.getServerPort()).concat("/pockerRoom/").concat(room.getName()).concat("?roomToken=").concat(token);
+      ResponseResult responseResult = new ResponseResult(ResponseResult.SUCCESS, "生成token 正确");
+      responseResult.getData().put("link", link);
+      return responseResult;
+    } else {
+      return new ResponseResult(ResponseResult.FAIL, "生成token 不正确！");
+    }
   }
 
   @MessageMapping("/joinPockerBoard/{roomName}/{curPage}")
