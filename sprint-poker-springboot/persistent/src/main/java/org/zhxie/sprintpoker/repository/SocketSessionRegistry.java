@@ -96,6 +96,7 @@ public class SocketSessionRegistry {
     dto.setClickedNum(record.getScore(userName).getFibonacciNum());
     dto.setFeatureName(record.getFeatureName());
     dto.setInternalTaskName(record.getInternalTaskTitle());
+    dto.setOwner(roomId2Room.get(roomID).getOwner());
     return dto;
   }
 

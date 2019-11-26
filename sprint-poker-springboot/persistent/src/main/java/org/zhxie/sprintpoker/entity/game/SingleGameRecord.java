@@ -12,6 +12,7 @@ public class SingleGameRecord {
     private String roomNum;
     private String internalTaskTitle = "";
     private Map<String, SingelPlayerScore> player2Score = Maps.newHashMap();
+    private String finalGameRecord;
 
     public void update(SingelPlayerScore singelPlayerScore) {
         if (!singelPlayerScore.getPlayerName().isEmpty() && !player2Score.containsKey(singelPlayerScore.getPlayerName())) {
