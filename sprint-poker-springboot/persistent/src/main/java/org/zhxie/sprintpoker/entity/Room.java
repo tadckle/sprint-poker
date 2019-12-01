@@ -3,6 +3,7 @@ package org.zhxie.sprintpoker.entity;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.Data;
+import org.zhxie.sprintpoker.entity.dto.CandidateDTO;
 import org.zhxie.sprintpoker.entity.dto.PageableDTO;
 import org.zhxie.sprintpoker.entity.game.RoomGameRecord;
 import org.zhxie.sprintpoker.entity.game.SingleGameRecord;
@@ -96,4 +97,15 @@ public class Room {
     public void addStory(PageableDTO dto) {
         gameRecord.addStory(players, name, dto);
     }
+
+    public void updateFinalScore(CandidateDTO candidateDTO, String ownerName) {
+        if (ownerName.equals(owner)) {
+            SingleGameRecord record = getCurPageSingleGRecord(candidateDTO.getPageNum());
+            record.setFinalGameRecord(candidateDTO.getScore());
+        }
+    }
+
+  public List<String> getFinalScores() {
+      return gameRecord.getFinalScores();
+  }
 }

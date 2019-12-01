@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.zhxie.sprintpoker.entity.Player;
 import org.zhxie.sprintpoker.entity.Room;
+import org.zhxie.sprintpoker.entity.dto.CandidateDTO;
 import org.zhxie.sprintpoker.entity.dto.PageableDTO;
 import org.zhxie.sprintpoker.entity.game.RoomGameRecord;
 import org.zhxie.sprintpoker.entity.game.SingleGameRecord;
@@ -81,7 +82,8 @@ public class SocketSessionRegistry {
   }
 
   public GameDTO getSingleGameRecord(String roomID, Integer curPage, String userName) {
-    final RoomGameRecord gameRecord = roomId2Room.get(roomID).getGameRecord();
+    final Room room = roomId2Room.get(roomID);
+    final RoomGameRecord gameRecord = room.getGameRecord();
     SingleGameRecord record = gameRecord.getCurPage(curPage);
     GameDTO dto = new GameDTO();
     boolean shown = record.isAllPlayerClicked();
@@ -96,7 +98,8 @@ public class SocketSessionRegistry {
     dto.setClickedNum(record.getScore(userName).getFibonacciNum());
     dto.setFeatureName(record.getFeatureName());
     dto.setInternalTaskName(record.getInternalTaskTitle());
-    dto.setOwn(roomId2Room.get(roomID).getOwner().equals(userName));
+    dto.setOwn(room.getOwner().equals(userName));
+    dto.setFinalScores(room.getFinalScores());
     return dto;
   }
 
@@ -180,6 +183,13 @@ public class SocketSessionRegistry {
     Room room = roomId2Room.get(dto.getRoomName());
     if (room != null) {
       room.addStory(dto);
+    }
+  }
+
+  public void updateRoomFinalScore(CandidateDTO candidateDTO, String ownerName) {
+    Room room = roomId2Room.get(candidateDTO.getRoomName());
+    if (room != null) {
+        room.updateFinalScore(candidateDTO, ownerName);
     }
   }
 }

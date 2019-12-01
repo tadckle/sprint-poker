@@ -17,4 +17,5 @@ public class GameDTO {
     private String featureName;
     private String internalTaskName;
     private boolean own;
+    private List<String> finalScores;
 }

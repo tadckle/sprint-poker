@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.zhxie.sprintpoker.entity.Room;
+import org.zhxie.sprintpoker.entity.dto.CandidateDTO;
+import org.zhxie.sprintpoker.entity.dto.GameDTO;
 import org.zhxie.sprintpoker.entity.dto.PageableDTO;
 import org.zhxie.sprintpoker.entity.dto.ResponseResult;
 import org.zhxie.sprintpoker.entity.game.SingleGameRecord;
-import org.zhxie.sprintpoker.entity.dto.GameDTO;
 import org.zhxie.sprintpoker.exception.CommandException;
 import org.zhxie.sprintpoker.repository.SocketSessionRegistry;
 import org.zhxie.sprintpoker.util.JwtUtil;
@@ -21,7 +22,6 @@ import org.zhxie.sprintpoker.util.JwtUtil;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.MalformedParameterizedTypeException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -122,5 +122,13 @@ public class RoomController {
   @SendTo("/pocker/pockerBoard/{roomName}")
   public GameDTO onNavigateToPage(Principal user, @RequestBody PageableDTO pagebleDTO) {
     return webAgentSessionRegistry.getSingleGameRecord(pagebleDTO.getRoomName(), pagebleDTO.getCurPage(), user.getName());
+  }
+
+  @MessageMapping("/OnSelectCandidate/{roomName}")
+  @SendTo("/pocker/pockerBoard/{roomName}")
+    public GameDTO onSelectCandidate(Principal user, @RequestBody CandidateDTO candidateDTO) {
+    webAgentSessionRegistry.updateRoomFinalScore(candidateDTO, user.getName());
+    return webAgentSessionRegistry.getSingleGameRecord(candidateDTO.getRoomName(), candidateDTO.getPageNum(),
+            user.getName());
   }
 }

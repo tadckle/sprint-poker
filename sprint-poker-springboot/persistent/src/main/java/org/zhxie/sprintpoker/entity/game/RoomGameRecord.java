@@ -7,6 +7,7 @@ import org.zhxie.sprintpoker.entity.dto.PageableDTO;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 public class RoomGameRecord {
@@ -62,5 +63,9 @@ public class RoomGameRecord {
     newOne.setFeatureName(dto.getTitle());
     newOne.setInternalTaskTitle(dto.getTaskTitle());
     recordList.add(newOne);
+  }
+
+  public List<String> getFinalScores() {
+    return recordList.stream().map(record -> record.getFinalGameRecord()).collect(Collectors.toList());
   }
 }
