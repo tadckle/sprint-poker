@@ -1,5 +1,6 @@
 package org.zhxie.sprintpoker.entity.game;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import lombok.Data;
 import org.zhxie.sprintpoker.entity.Player;
@@ -66,6 +67,8 @@ public class RoomGameRecord {
   }
 
   public List<String> getFinalScores() {
-    return recordList.stream().map(record -> record.getFinalGameRecord()).collect(Collectors.toList());
+    return recordList.stream().map(record -> record.getFinalGameRecord()).filter(s -> !Strings.isNullOrEmpty(s))
+            .collect(Collectors.toList());
   }
+
 }
