@@ -46,6 +46,7 @@ public class RoomGameRecord {
       newOne.setFeatureName(former.getFeatureName());
       newOne.setInternalTaskTitle(former.getInternalTaskTitle());
       newOne.setRoomNum(former.getRoomNum());
+      newOne.setFinalGameRecord("");
     }
   }
 
