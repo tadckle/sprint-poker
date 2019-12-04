@@ -2,10 +2,13 @@ server:
   port: 8080
   tomcat:
     uri-encoding: UTF-8
+  servlet:
+    session:
+      timeout: 86400s
 spring:
   application:
     name: sprint-poker #指定服务名
   profiles:
-    active: dev
+    active: bc
 ---
 
