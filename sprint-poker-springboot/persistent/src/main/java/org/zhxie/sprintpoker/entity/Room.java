@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.Data;
 import org.zhxie.sprintpoker.entity.dto.CandidateDTO;
+import org.zhxie.sprintpoker.entity.dto.FinalResultDTO;
 import org.zhxie.sprintpoker.entity.dto.PageableDTO;
 import org.zhxie.sprintpoker.entity.game.RoomGameRecord;
 import org.zhxie.sprintpoker.entity.game.SingleGameRecord;
@@ -105,7 +106,7 @@ public class Room {
         }
     }
 
-  public List<String> getFinalScores() {
+  public List<FinalResultDTO> getFinalScores() {
       return gameRecord.getFinalScores();
   }
 }

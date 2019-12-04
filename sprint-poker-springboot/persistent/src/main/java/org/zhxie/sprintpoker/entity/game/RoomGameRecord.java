@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import lombok.Data;
 import org.zhxie.sprintpoker.entity.Player;
+import org.zhxie.sprintpoker.entity.dto.FinalResultDTO;
 import org.zhxie.sprintpoker.entity.dto.PageableDTO;
 
 import java.util.List;
@@ -66,8 +67,9 @@ public class RoomGameRecord {
     recordList.add(newOne);
   }
 
-  public List<String> getFinalScores() {
-    return recordList.stream().map(record -> record.getFinalGameRecord()).filter(s -> !Strings.isNullOrEmpty(s))
+  public List<FinalResultDTO> getFinalScores() {
+    return recordList.stream().filter(s -> !Strings.isNullOrEmpty(s.getFinalGameRecord()))
+            .map(record -> new FinalResultDTO(record.getInternalTaskTitle(), record.getFinalGameRecord()))
             .collect(Collectors.toList());
   }
 
