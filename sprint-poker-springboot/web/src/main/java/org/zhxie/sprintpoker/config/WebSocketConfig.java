@@ -27,7 +27,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
         // carry the message back to the client on destinations prefixed with "/poker"
         //设置简单的消息代理器，它使用Memory（内存）作为消息代理器，
-        //其中/user和/topic都是我们发送到前台的数据前缀。前端必须订阅以/user开始的消息（.subscribe()进行监听）。
+        //其中/pocker都是我们发送到前台的数据前缀。前端必须订阅以/pocker开始的消息（.subscribe()进行监听）。
         //setHeartbeatValue设置后台向前台发送的心跳，
         //注意：setHeartbeatValue这个不能单独设置，不然不起作用，要配合后面setTaskScheduler才可以生效。
         //对应的解决方法的网址：https://stackoverflow.com/questions/39220647/spring-stomp-over-websockets-not-scheduling-heartbeats
