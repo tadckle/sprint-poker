@@ -6,6 +6,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +17,7 @@ import org.zhxie.sprintpoker.entity.game.SingleGameRecord;
 import org.zhxie.sprintpoker.entity.dto.GameDTO;
 import org.zhxie.sprintpoker.exception.CommandException;
 import org.zhxie.sprintpoker.repository.SocketSessionRegistry;
+import org.zhxie.sprintpoker.util.CookieUtil;
 import org.zhxie.sprintpoker.util.JwtUtil;
 
 import javax.servlet.http.Cookie;
@@ -50,13 +52,19 @@ public class RoomController {
 
   @ResponseBody
   @PostMapping("/api/rooms/{roomName}")
-  public ResponseResult checkRoomPassword(@RequestBody Room room, HttpServletResponse response) {
+  public ResponseResult checkRoomPassword(@RequestBody Room room,@PathVariable String roomName, HttpServletRequest request, HttpServletResponse response) {
+    String roomPassword = CookieUtil.extractCookie(request, "roomPassword_".concat(roomName));
+    Optional<Room> findRoomByCookie = webAgentSessionRegistry.getRooms().stream().filter(roomItem -> (roomItem.getName().equals(roomName) && (roomItem.getRoomPassword().equals(roomPassword) ))).findAny();
+    if(findRoomByCookie.isPresent()) {
+      return new ResponseResult(ResponseResult.SUCCESS, "房间密码正确");
+    }
+
     Optional<Room> findRoom = webAgentSessionRegistry.getRooms().stream().filter(roomItem -> (room.getName().equals(roomItem.getName()) && (room.getRoomPassword().equals(roomItem.getRoomPassword())))).findAny();
       if(findRoom.isPresent()) {
         String cookieKey = "roomPassword_".concat(room.getName());
         String cookieValue = room.getRoomPassword();
         Cookie passwordCookie = new Cookie(cookieKey, cookieValue);
-        passwordCookie.setPath("/pockerRoom");
+        passwordCookie.setPath("/");
         response.addCookie(passwordCookie);
         return new ResponseResult(ResponseResult.SUCCESS, "房间密码正确");
       } else {
