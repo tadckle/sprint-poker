@@ -54,22 +54,17 @@ public class RoomController {
   @PostMapping("/api/rooms/{roomName}")
   public ResponseResult checkRoomPassword(@RequestBody Room room,@PathVariable String roomName, HttpServletRequest request, HttpServletResponse response) {
     String roomPassword = CookieUtil.extractCookie(request, "roomPassword_".concat(roomName));
-    Optional<Room> findRoomByCookie = webAgentSessionRegistry.getRooms().stream().filter(roomItem -> (roomItem.getName().equals(roomName) && (roomItem.getRoomPassword().equals(roomPassword) ))).findAny();
-    if(findRoomByCookie.isPresent()) {
+    Optional<Room> findRoom = webAgentSessionRegistry.getRooms().stream().filter(roomItem -> (roomName.equals(roomItem.getName()) && (room.getRoomPassword().equals(roomItem.getRoomPassword()) || roomItem.getRoomPassword().equals(roomPassword)))).findAny();
+    if (findRoom.isPresent()) {
+      String cookieKey = "roomPassword_".concat(roomName);
+      String cookieValue = findRoom.get().getRoomPassword();
+      Cookie passwordCookie = new Cookie(cookieKey, cookieValue);
+      passwordCookie.setPath("/");
+      response.addCookie(passwordCookie);
       return new ResponseResult(ResponseResult.SUCCESS, "房间密码正确");
+    } else {
+      return new ResponseResult(ResponseResult.FAIL, "房间密码不正确！");
     }
-
-    Optional<Room> findRoom = webAgentSessionRegistry.getRooms().stream().filter(roomItem -> (room.getName().equals(roomItem.getName()) && (room.getRoomPassword().equals(roomItem.getRoomPassword())))).findAny();
-      if(findRoom.isPresent()) {
-        String cookieKey = "roomPassword_".concat(room.getName());
-        String cookieValue = room.getRoomPassword();
-        Cookie passwordCookie = new Cookie(cookieKey, cookieValue);
-        passwordCookie.setPath("/");
-        response.addCookie(passwordCookie);
-        return new ResponseResult(ResponseResult.SUCCESS, "房间密码正确");
-      } else {
-        return new ResponseResult(ResponseResult.FAIL, "房间密码不正确！");
-      }
   }
 
   @ResponseBody
