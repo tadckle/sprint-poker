@@ -32,11 +32,6 @@ public class DashboardController {
     return new ResponseResult(ResponseResult.SUCCESS, "保存成功！");
   }
 
-//  @RequestMapping(method = RequestMethod.POST)
-//  public ResponseResult save2(TicketRecord ticketRecord) {
-//    ticketRecordService.save(ticketRecord);
-//    return new ResponseResult(ResponseResult.SUCCESS, "保存成功！");
-//  }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
   public ResponseResult update(@PathVariable int id, @RequestBody TicketRecord ticketRecord) {
@@ -55,10 +50,5 @@ public class DashboardController {
     return new ResponseResult(ResponseResult.SUCCESS, "删除成功！");
   }
 
-//  @RequestMapping(method = RequestMethod.DELETE)
-//  public ResponseResult deleteByIds(@RequestBody List<Integer> ids) {
-//    ticketRecordService.deleteByIds(ids);
-//    return new ResponseResult(ResponseResult.SUCCESS, "删除成功！");
-//  }
 
 }

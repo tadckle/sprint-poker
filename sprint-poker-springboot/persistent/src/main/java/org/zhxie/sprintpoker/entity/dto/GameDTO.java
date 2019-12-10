@@ -16,6 +16,6 @@ public class GameDTO {
     private String clickedNum;
     private String featureName;
     private String internalTaskName;
-    private boolean own;
-    private List<String> finalScores;
+    private String owner;
+    private List<FinalResultDTO> finalScores;
 }
